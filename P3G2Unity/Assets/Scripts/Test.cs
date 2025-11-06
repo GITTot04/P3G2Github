@@ -2,15 +2,23 @@ using UnityEngine;
 
 public class Test : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public GameObject leftFingertip;
+    public GameObject leftHand;
+    public GameObject leftParticleSystem;
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (leftFingertip.transform.position.y - leftHand.transform.position.y > 0.05f && !leftParticleSystem.activeInHierarchy)
+        {
+            leftParticleSystem.SetActive(true);
+        }
+        else if(leftFingertip.transform.position.y - leftHand.transform.position.y <= 0.05f && leftParticleSystem.activeInHierarchy)
+        {
+            leftParticleSystem.SetActive(false);
+        }
     }
 }

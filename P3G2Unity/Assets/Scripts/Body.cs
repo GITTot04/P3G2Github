@@ -59,6 +59,7 @@ public struct Body : ISerializable
         {
             // K4ABT joint position unit is in millimeter. We need to convert to meters before we use the values.
             JointPositions3D[bodyPoint] = body.Skeleton.GetJoint(bodyPoint).Position / 1000.0f;
+            Debug.Log("The joint: 8 has the position: " + body.Skeleton.GetJoint(8).Position / 1000.0f);
             JointRotations[bodyPoint] = body.Skeleton.GetJoint(bodyPoint).Quaternion;
             JointPrecisions[bodyPoint] = body.Skeleton.GetJoint(bodyPoint).ConfidenceLevel;
 
