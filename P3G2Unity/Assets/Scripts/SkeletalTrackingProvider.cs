@@ -10,7 +10,6 @@ public class SkeletalTrackingProvider : BackgroundDataProvider
 {
     bool readFirstFrame = false;
     TimeSpan initialTimestamp;
-
     public SkeletalTrackingProvider(int id) : base(id)
     {
         Debug.Log("in the skeleton provider constructor");
@@ -72,7 +71,6 @@ public class SkeletalTrackingProvider : BackgroundDataProvider
                                 {
                                     currentFrameData.Bodies[i].CopyFromBodyTrackingSdk(frame.GetBody(i), deviceCalibration);
                                 }
-
                                 // Store depth image.
                                 Capture bodyFrameCapture = frame.Capture;
                                 Image depthImage = bodyFrameCapture.Depth;
