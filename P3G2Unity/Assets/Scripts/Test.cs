@@ -15,6 +15,8 @@ public class Test : MonoBehaviour
     int stashedSpherePositions;
     public GameObject drawingSphere;
     public bool drawingHand; // 0 = left, 1 = right
+
+    public DrawManager drawManager;
     private void Awake()
     {
         followingParticles = drawingHandTracker.transform.GetChild(0).GetComponent<ParticleSystem>();
@@ -31,15 +33,21 @@ public class Test : MonoBehaviour
             {
                 followingParticles.startColor = Color.green;
                 drawingHandTracker.transform.position = Vector3.Lerp(drawingHandTracker.transform.position, leftHandPositionInvertedY * 8, 0.1f);
-                spherePositions[stashedSpherePositions] = drawingHandTracker.transform.position;
+
+                drawManager.Draw(drawingHandTracker.transform.position);
+                /*spherePositions[stashedSpherePositions] = drawingHandTracker.transform.position;
                 stashedSpherePositions++;
+                */
             }
             else if (drawingHand && Mathf.Abs(leftHandPositionInvertedY.y - leftShoulderPositionInvertedY.y) > 0.3)
             {
                 followingParticles.startColor = Color.green;
                 drawingHandTracker.transform.position = Vector3.Lerp(drawingHandTracker.transform.position, rightHandPositionInvertedY * 8, 0.1f);
-                spherePositions[stashedSpherePositions] = drawingHandTracker.transform.position;
+
+                drawManager.Draw(drawingHandTracker.transform.position);
+                /*spherePositions[stashedSpherePositions] = drawingHandTracker.transform.position;
                 stashedSpherePositions++;
+                */
             }
             else
             {
@@ -54,15 +62,16 @@ public class Test : MonoBehaviour
                 }
                 if (stashedSpherePositions != 0)
                 {
-                    drawSpheres();
+                    //drawSpheres();
                 }
             }
         }
         else
         {
-            drawSpheres();
+            //drawSpheres();
         }
     }
+    /*
     void drawSpheres()
     {
         for (int i = 0; i < stashedSpherePositions; i++)
@@ -71,4 +80,5 @@ public class Test : MonoBehaviour
         }
         stashedSpherePositions = 0;
     }
+    */
 }
