@@ -315,13 +315,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -3.78}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.000000104308114}
+  m_LocalPosition: {x: -0, y: 0, z: 30.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &330585547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -596,7 +596,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   metaBallPrefab: {fileID: 2035581274862937256, guid: e9bb4481b37b182438e38468c203d7fd, type: 3}
-  edgeSize: 0.5
+  edgeSize: 1
+  metaBallSmoothOutMinDistance: 0.1
+  metaBallSmoothOutMaxDistance: 0.5
   safeZone: 0
   resolution: 0.05
   threshold: 1
@@ -5564,9 +5566,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77ea5ff7fe989b44789f6231e6cd9f68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  drawZoneDistance: 0
   ballDensity: 0.04
   drawContainer: {fileID: 460938872}
-  metaBallMaxCount: 50
+  metaBallMaxCount: 80
   metaBallPositions: []
 --- !u!4 &1323331397
 Transform:

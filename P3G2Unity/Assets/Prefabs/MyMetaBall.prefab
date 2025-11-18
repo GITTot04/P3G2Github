@@ -100,4 +100,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   negativeBall: 0
-  factor: 0.0003
+  factor: 0.00015

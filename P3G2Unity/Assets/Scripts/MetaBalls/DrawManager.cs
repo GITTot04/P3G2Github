@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 public class DrawManager : MonoBehaviour
 {
 
-    float drawZoneDistance;
+    public float drawZoneDistance;
 
     public float ballDensity;
     float instMetaBallClock = 0f;
