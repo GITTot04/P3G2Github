@@ -9,6 +9,8 @@ public class Container : MonoBehaviour {
 
     public float edgeSize; //Size of edge of renderzone. Prevents cut off meshes.
     List<GameObject> metaBalls = new List<GameObject>();
+    public float metaBallSmoothOutMinDistance = 0.02f;
+    public float metaBallSmoothOutMaxDistance = 0.3f;
 
     public float safeZone;
     public float resolution;
@@ -46,6 +48,26 @@ public class Container : MonoBehaviour {
             newMetaBall.transform.localScale = new Vector3(.06f,.06f,.06f);
             metaBalls.Add(newMetaBall);
 
+        }
+        for (int i = 0; i < globalPositions.Length; i++)
+        {
+            if (i > 0)
+            {
+                float gapBetweenBalls = (globalPositions[i] - globalPositions[i - 1]).magnitude;
+                if (gapBetweenBalls > metaBallSmoothOutMinDistance && gapBetweenBalls < metaBallSmoothOutMaxDistance)
+                {
+                    GameObject extraMetaball = Instantiate(metaBallPrefab, this.transform);
+                    //newMetaBall.transform.localPosition = globalPos - transform.position;
+                    extraMetaball.transform.position = (globalPositions[i]+globalPositions[i-1])/2;
+                    extraMetaball.transform.localScale = new Vector3(.06f, .06f, .06f);
+                    metaBalls.Add(extraMetaball);
+                }
+            }
+            GameObject newMetaBall = Instantiate(metaBallPrefab, this.transform);
+            //newMetaBall.transform.localPosition = globalPos - transform.position;
+            newMetaBall.transform.position = globalPositions[i];
+            newMetaBall.transform.localScale = new Vector3(.06f, .06f, .06f);
+            metaBalls.Add(newMetaBall);
         }
         StartCoroutine(Render());
 
