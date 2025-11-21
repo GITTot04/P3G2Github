@@ -6190,6 +6190,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   handController: {fileID: 1599694849}
   drawingColour: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  mainCameraTransform: {fileID: 330585546}
 --- !u!4 &2041954382
 Transform:
   m_ObjectHideFlags: 0

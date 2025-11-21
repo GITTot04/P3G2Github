@@ -32,7 +32,7 @@ public class Test : MonoBehaviour
         rightShoulderPositionInvertedY = new Vector3(rightShoulderPosition.x, rightShoulderPosition.y * -1, rightShoulderPosition.z);
         if (stashedSpherePositions < 40)
         {
-            if (!drawingHand && Mathf.Abs(rightHandPositionInvertedY.y - rightShoulderPositionInvertedY.y) > 0.3) // 0 = left, 1 = right
+            if (!drawingHand && Mathf.Abs(rightHandPositionInvertedY.y - rightShoulderPositionInvertedY.y) > 0.2) // 0 = left, 1 = right
             {
                 if (colourMenu.activeSelf)
                 {
@@ -48,7 +48,7 @@ public class Test : MonoBehaviour
                 stashedSpherePositions++;
                 */
             }
-            else if (drawingHand && Mathf.Abs(leftHandPositionInvertedY.y - leftShoulderPositionInvertedY.y) > 0.3)
+            else if (drawingHand && Mathf.Abs(leftHandPositionInvertedY.y - leftShoulderPositionInvertedY.y) > 0.2)
             {
                 if (colourMenu.activeSelf)
                 {

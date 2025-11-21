@@ -6,17 +6,18 @@ public class ColourChoosing : MonoBehaviour
     GameObject colourMenu;
     public Test handController;
     public Color drawingColour = Color.gray;
+    public Transform mainCameraTransform;
 
     private void Awake()
     {
         colourMenu = transform.GetChild(0).gameObject;
         if (!handController.drawingHand)
         {
-            colourMenu.transform.localPosition = new Vector3(1, 0, 0);
+            colourMenu.transform.localPosition = new Vector3(2, 0, 0);
         }
         else
         {
-            colourMenu.transform.localPosition = new Vector3(-1, 0, 0);
+            colourMenu.transform.localPosition = new Vector3(-2, 0, 0);
         }
     }
 
@@ -25,7 +26,8 @@ public class ColourChoosing : MonoBehaviour
         while (true)
         {
             RaycastHit hit;
-            Ray ray = new Ray(handController.drawingHandTracker.transform.position, new Vector3(0, 0, -1));
+            Vector3 rayDirection = handController.drawingHandTracker.transform.position - mainCameraTransform.position;
+            Ray ray = new Ray(handController.drawingHandTracker.transform.position, rayDirection);
             Physics.Raycast(ray, out hit);
             if (hit.collider != null)
             {
