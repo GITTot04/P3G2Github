@@ -77,7 +77,7 @@ public class DrawManager : MonoBehaviour
     
     void InstantiateDrawing (bool instantiateAsEndedDrawing)
     {
-        container.InstantiateMetaBalls(metaBallPositions, lowestPosition);
+        container.InstantiateMetaBalls(metaBallPositions, metaBallArrayPosition, lowestPosition);
         if (instantiateAsEndedDrawing)
         {
             metaBallArrayPosition = 0;

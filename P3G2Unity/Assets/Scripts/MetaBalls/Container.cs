@@ -36,31 +36,33 @@ public class Container : MonoBehaviour {
 
         
     }
-    public void InstantiateMetaBalls(Vector3[] globalPositions, Vector3 lowestPosition) 
+    public void InstantiateMetaBalls(Vector3[] globalPositions, int arrayLength, Vector3 lowestPosition) 
     {
 
         transform.position = new Vector3( 
-            lowestPosition.x + transform.localScale.x / 2 - edgeSize, 
-            lowestPosition.y + transform.localScale.y / 2 - edgeSize, 
-            lowestPosition.z + transform.localScale.z / 2 - edgeSize);
-        foreach (Vector3 globalPos in globalPositions)
+        lowestPosition.x + transform.localScale.x / 2 - edgeSize, 
+        lowestPosition.y + transform.localScale.y / 2 - edgeSize, 
+        lowestPosition.z + transform.localScale.z / 2 - edgeSize);
+        /*
+        for (int i = 0; i < arrayLength; i++)
         {
             GameObject newMetaBall = Instantiate(metaBallPrefab, this.transform);
             //newMetaBall.transform.localPosition = globalPos - transform.position;
-            newMetaBall.transform.position = globalPos;
-            newMetaBall.transform.localScale = new Vector3(.06f,.06f,.06f);
+            newMetaBall.transform.position = globalPositions[i];
+            newMetaBall.transform.localScale = new Vector3(.06f, .06f, .06f);
             metaBalls.Add(newMetaBall);
+        }*/
 
-        }
-        for (int i = 0; i < globalPositions.Length; i++)
+
+        for (int i = 0; i < arrayLength; i++)
         {
             //Smoothing out between gaps;
             if (i > 0 && gabSmoothIterations > 0)
             {
                 float gapBetweenBalls = (globalPositions[i] - globalPositions[i - 1]).magnitude;
-                Debug.Log("Gap between balls:" + gapBetweenBalls);
                 for (int j = gabSmoothIterations; j > 0; j--) 
                 {
+
                     if (gapBetweenBalls > gabSmoothDistance*j) //Starts with biggest distance
                     {
                         int fillOutBallsCount = j;
@@ -70,6 +72,7 @@ public class Container : MonoBehaviour {
                             Vector3 position = Vector3.Lerp(globalPositions[i] ,globalPositions[i - 1], lerpValue);
                             InstantiateBall(position);
                         }
+                       // Debug.Log("Doing interatuins: " + j);
                         break;
                     }
                 }
