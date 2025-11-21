@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 public class Test : MonoBehaviour
 {
@@ -18,79 +19,107 @@ public class Test : MonoBehaviour
     public bool drawingHand; // 0 = left, 1 = right
     GameObject colourMenu;
 
+    public bool mouseDraw = false;
+    bool mouseDown = false;
+
     public DrawManager drawManager;
     private void Awake()
     {
         followingParticles = drawingHandTracker.transform.GetChild(0).GetComponent<ParticleSystem>();
         colourMenu = nonDrawingHandTracker.transform.GetChild(0).gameObject;
+        
     }
+  
     void FixedUpdate()
     {
-        leftHandPositionInvertedY = new Vector3(leftHandPosition.x, leftHandPosition.y * -1, leftHandPosition.z);
-        leftShoulderPositionInvertedY = new Vector3(leftShoulderPosition.x, leftShoulderPosition.y * -1, leftShoulderPosition.z);
-        rightHandPositionInvertedY = new Vector3(rightHandPosition.x, rightHandPosition.y * -1, rightHandPosition.z);
-        rightShoulderPositionInvertedY = new Vector3(rightShoulderPosition.x, rightShoulderPosition.y * -1, rightShoulderPosition.z);
-        if (stashedSpherePositions < 40)
+        if (!mouseDraw)
         {
-            if (!drawingHand && Mathf.Abs(rightHandPositionInvertedY.y - rightShoulderPositionInvertedY.y) > 0.2) // 0 = left, 1 = right
+            leftHandPositionInvertedY = new Vector3(leftHandPosition.x, leftHandPosition.y * -1, leftHandPosition.z);
+            leftShoulderPositionInvertedY = new Vector3(leftShoulderPosition.x, leftShoulderPosition.y * -1, leftShoulderPosition.z);
+            rightHandPositionInvertedY = new Vector3(rightHandPosition.x, rightHandPosition.y * -1, rightHandPosition.z);
+            rightShoulderPositionInvertedY = new Vector3(rightShoulderPosition.x, rightShoulderPosition.y * -1, rightShoulderPosition.z);
+            if (stashedSpherePositions < 40)
             {
-                if (colourMenu.activeSelf)
+                if (!drawingHand && Mathf.Abs(rightHandPositionInvertedY.y - rightShoulderPositionInvertedY.y) > 0.2) // 0 = left, 1 = right
                 {
-                    colourMenu.SetActive(false);
-                    StopCoroutine(nonDrawingHandTracker.GetComponent<ColourChoosing>().PickingColours());
-                }
-                followingParticles.startColor = Color.green;
-                drawingHandTracker.transform.position = Vector3.Lerp(drawingHandTracker.transform.position, leftHandPositionInvertedY * 8, 0.1f);
-                nonDrawingHandTracker.transform.position = Vector3.Lerp(nonDrawingHandTracker.transform.position, rightHandPositionInvertedY * 8, 0.1f);
-
-                drawManager.Draw(drawingHandTracker.transform.position);      
-                /*spherePositions[stashedSpherePositions] = drawingHandTracker.transform.position;
-                stashedSpherePositions++;
-                */
-            }
-            else if (drawingHand && Mathf.Abs(leftHandPositionInvertedY.y - leftShoulderPositionInvertedY.y) > 0.2)
-            {
-                if (colourMenu.activeSelf)
-                {
-                    colourMenu.SetActive(false);
-                    StopCoroutine(nonDrawingHandTracker.GetComponent<ColourChoosing>().PickingColours());
-                }
-                followingParticles.startColor = Color.green;
-                drawingHandTracker.transform.position = Vector3.Lerp(drawingHandTracker.transform.position, rightHandPositionInvertedY * 8, 0.1f);
-                nonDrawingHandTracker.transform.position = Vector3.Lerp(nonDrawingHandTracker.transform.position, leftHandPositionInvertedY * 8, 0.1f);
-
-                drawManager.Draw(drawingHandTracker.transform.position);       
-                /*spherePositions[stashedSpherePositions] = drawingHandTracker.transform.position;
-                stashedSpherePositions++;
-                */
-            }
-            else
-            {
-                followingParticles.startColor = Color.red;
-                if (!colourMenu.activeSelf)
-                {
-                    colourMenu.SetActive(true);
-                    StartCoroutine(nonDrawingHandTracker.GetComponent<ColourChoosing>().PickingColours());
-                }
-                if (!drawingHand)
-                {
+                    if (colourMenu.activeSelf)
+                    {
+                        colourMenu.SetActive(false);
+                        StopCoroutine(nonDrawingHandTracker.GetComponent<ColourChoosing>().PickingColours());
+                    }
+                    followingParticles.startColor = Color.green;
                     drawingHandTracker.transform.position = Vector3.Lerp(drawingHandTracker.transform.position, leftHandPositionInvertedY * 8, 0.1f);
                     nonDrawingHandTracker.transform.position = Vector3.Lerp(nonDrawingHandTracker.transform.position, rightHandPositionInvertedY * 8, 0.1f);
+
+                    drawManager.Draw(drawingHandTracker.transform.position);
+                    /*spherePositions[stashedSpherePositions] = drawingHandTracker.transform.position;
+                    stashedSpherePositions++;
+                    */
+                }
+                else if (drawingHand && Mathf.Abs(leftHandPositionInvertedY.y - leftShoulderPositionInvertedY.y) > 0.2)
+                {
+                    if (colourMenu.activeSelf)
+                    {
+                        colourMenu.SetActive(false);
+                        StopCoroutine(nonDrawingHandTracker.GetComponent<ColourChoosing>().PickingColours());
+                    }
+                    followingParticles.startColor = Color.green;
+                    drawingHandTracker.transform.position = Vector3.Lerp(drawingHandTracker.transform.position, rightHandPositionInvertedY * 8, 0.1f);
+                    nonDrawingHandTracker.transform.position = Vector3.Lerp(nonDrawingHandTracker.transform.position, leftHandPositionInvertedY * 8, 0.1f);
+
+                    drawManager.Draw(drawingHandTracker.transform.position);
+                    /*spherePositions[stashedSpherePositions] = drawingHandTracker.transform.position;
+                    stashedSpherePositions++;
+                    */
                 }
                 else
                 {
-                    drawingHandTracker.transform.position = Vector3.Lerp(drawingHandTracker.transform.position, rightHandPositionInvertedY * 8, 0.1f);
-                    nonDrawingHandTracker.transform.position = Vector3.Lerp(nonDrawingHandTracker.transform.position, leftHandPositionInvertedY * 8, 0.1f);
-                }
-                if (stashedSpherePositions != 0)
-                {
-                    //drawSpheres();
+                    followingParticles.startColor = Color.red;
+                    if (!colourMenu.activeSelf)
+                    {
+                        colourMenu.SetActive(true);
+                        StartCoroutine(nonDrawingHandTracker.GetComponent<ColourChoosing>().PickingColours());
+                    }
+                    if (!drawingHand)
+                    {
+                        drawingHandTracker.transform.position = Vector3.Lerp(drawingHandTracker.transform.position, leftHandPositionInvertedY * 8, 0.1f);
+                        nonDrawingHandTracker.transform.position = Vector3.Lerp(nonDrawingHandTracker.transform.position, rightHandPositionInvertedY * 8, 0.1f);
+                    }
+                    else
+                    {
+                        drawingHandTracker.transform.position = Vector3.Lerp(drawingHandTracker.transform.position, rightHandPositionInvertedY * 8, 0.1f);
+                        nonDrawingHandTracker.transform.position = Vector3.Lerp(nonDrawingHandTracker.transform.position, leftHandPositionInvertedY * 8, 0.1f);
+                    }
+                    if (stashedSpherePositions != 0)
+                    {
+                        //drawSpheres();
+                    }
                 }
             }
+            else
+            {
+                //drawSpheres();
+            }
         }
-        else
+        else if (mouseDraw)
         {
-            //drawSpheres();
+
+            if (mouseDown)
+            {
+                drawManager.Draw(MouseTracker.worldPos);
+            }
+          
+        }
+    }
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            mouseDown = true;
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            mouseDown = false;
         }
     }
     /*
@@ -103,4 +132,5 @@ public class Test : MonoBehaviour
         stashedSpherePositions = 0;
     }
     */
+
 }
