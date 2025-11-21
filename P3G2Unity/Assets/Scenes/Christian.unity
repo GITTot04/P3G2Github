@@ -6629,6 +6629,7 @@ MonoBehaviour:
   curser: {fileID: 1802268499}
   drawingSphere: {fileID: 1450242469069308458, guid: b05d026c372ffd34c9a79e77a2f3ea70, type: 3}
   drawingHand: 1
+  mouseDraw: 0
   drawManager: {fileID: 0}
 --- !u!4 &1599694850
 Transform:
@@ -6747,7 +6748,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1807445955
 Transform:
   m_ObjectHideFlags: 0
