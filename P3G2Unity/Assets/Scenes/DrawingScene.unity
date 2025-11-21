@@ -815,9 +815,9 @@ MonoBehaviour:
   ColourChoosing: {fileID: 927094725}
   edgeSize: 0.2
   boxOffsetCompentsater: 1.5
-  gabSmoothDistance: 0.2
-  gabSmoothIterations: 0
-  metaBallSmoothOutMinDistance: 0.2
+  gabSmoothDistance: 0.06
+  gabSmoothIterations: 15
+  metaBallSmoothOutMinDistance: 0.03
   metaBallSmoothOutMaxDistance: 0.5
   safeZone: 0
   resolution: 0.05
@@ -6134,7 +6134,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   drawZoneDistance: 0
-  ballDensity: 0.14
+  ballDensity: 0.03
   drawContainer: {fileID: 460938872}
   metaBallMaxCount: 80
   metaBallPositions: []
@@ -6294,7 +6294,7 @@ MonoBehaviour:
   nonDrawingHandTracker: {fileID: 927094724}
   drawingSphere: {fileID: 1450242469069308458, guid: b05d026c372ffd34c9a79e77a2f3ea70, type: 3}
   drawingHand: 0
-  mouseDraw: 1
+  mouseDraw: 0
   drawManager: {fileID: 1323331396}
 --- !u!4 &1599694850
 Transform:
