@@ -10,7 +10,6 @@ public class DrawManager : MonoBehaviour
     public float drawZoneDistance;
 
     public float ballDensity;
-    float instMetaBallClock = 0f;
     int framesWithoutDraw;
     bool isDrawing = false;
 
@@ -46,13 +45,12 @@ public class DrawManager : MonoBehaviour
         }
         framesWithoutDraw++;
 
-        drawZoneDistance = container.transform.localScale.x - container.edgeSize*2;
+        drawZoneDistance = container.transform.localScale.x - container.edgeSize*2 - container.boxOffsetCompentsater;
     }
 
     public void Draw(Vector3 position)
     {
         isDrawing = true;
-        instMetaBallClock += Time.deltaTime;
         framesWithoutDraw = 0;
 
 

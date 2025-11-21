@@ -363,8 +363,8 @@ Transform:
   m_GameObject: {fileID: 296079993}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.125, y: -0.125, z: -0.125}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 460938876}
@@ -532,7 +532,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.000000104308114}
-  m_LocalPosition: {x: -0, y: 0, z: 30.9}
+  m_LocalPosition: {x: 0, y: 0, z: 20.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -813,7 +813,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   metaBallPrefab: {fileID: 2035581274862937256, guid: e9bb4481b37b182438e38468c203d7fd, type: 3}
   ColourChoosing: {fileID: 927094725}
-  edgeSize: 1
+  edgeSize: 0.2
+  boxOffsetCompentsater: 1.5
   metaBallSmoothOutMinDistance: 0.2
   metaBallSmoothOutMaxDistance: 0.5
   safeZone: 0
