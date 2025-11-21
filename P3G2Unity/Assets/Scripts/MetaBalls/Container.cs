@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Container : MonoBehaviour {
     public GameObject metaBallPrefab;
-
+    public ColourChoosing ColourChoosing;
     public float edgeSize; //Size of edge of renderzone. Prevents cut off meshes.
     List<GameObject> metaBalls = new List<GameObject>();
     public float metaBallSmoothOutMinDistance = 0.02f;
@@ -84,6 +84,8 @@ public class Container : MonoBehaviour {
     public IEnumerator Render()
     {
         yield return null;
+        material.color = ColourChoosing.drawingColour;
+
         this.grid.evaluateAll(this.GetComponentsInChildren<MetaBall>());
         Mesh mesh = this.GetComponent<MeshFilter>().mesh;
         mesh.Clear();
@@ -91,17 +93,18 @@ public class Container : MonoBehaviour {
         mesh.triangles = this.grid.getTriangles();
         //mesh.RecalculateNormals();
         RecalculateSmoothNormals(mesh);
-        if (this.calculateNormals)
-        {
-          
-        }
+       
+
+
         GameObject drawZoneNewObj = new GameObject();
         drawZoneNewObj.transform.localScale = transform.localScale;
+
         //First set scale then parent!
         drawZoneNewObj.transform.SetParent(drawZone.transform);
         Mesh independentMesh = Instantiate(mesh); //Mesh needs to be independent
         drawZoneNewObj.AddComponent<MeshFilter>().mesh = independentMesh;
-        drawZoneNewObj.AddComponent<MeshRenderer>().material = material;
+        drawZoneNewObj.AddComponent<MeshRenderer>().material = Instantiate(material);
+        
         drawZoneNewObj.transform.position = transform.position;
         mesh.Clear();
 
