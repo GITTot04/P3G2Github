@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 public class Test : MonoBehaviour
 {
@@ -12,6 +11,7 @@ public class Test : MonoBehaviour
     Vector3 rightShoulderPositionInvertedY;
     public GameObject drawingHandTracker;
     public GameObject nonDrawingHandTracker;
+    public GameObject curser;
     ParticleSystem followingParticles;
     Vector3[] spherePositions = new Vector3[40];
     int stashedSpherePositions;
@@ -27,9 +27,7 @@ public class Test : MonoBehaviour
     {
         followingParticles = drawingHandTracker.transform.GetChild(0).GetComponent<ParticleSystem>();
         colourMenu = nonDrawingHandTracker.transform.GetChild(0).gameObject;
-        
     }
-  
     void FixedUpdate()
     {
         if (!mouseDraw)
@@ -44,8 +42,9 @@ public class Test : MonoBehaviour
                 {
                     if (colourMenu.activeSelf)
                     {
+                        StopAllCoroutines();
                         colourMenu.SetActive(false);
-                        StopCoroutine(nonDrawingHandTracker.GetComponent<ColourChoosing>().PickingColours());
+                        curser.SetActive(false);
                     }
                     followingParticles.startColor = Color.green;
                     drawingHandTracker.transform.position = Vector3.Lerp(drawingHandTracker.transform.position, leftHandPositionInvertedY * 8, 0.1f);
@@ -60,8 +59,9 @@ public class Test : MonoBehaviour
                 {
                     if (colourMenu.activeSelf)
                     {
+                        StopAllCoroutines();
                         colourMenu.SetActive(false);
-                        StopCoroutine(nonDrawingHandTracker.GetComponent<ColourChoosing>().PickingColours());
+                        curser.SetActive(false);
                     }
                     followingParticles.startColor = Color.green;
                     drawingHandTracker.transform.position = Vector3.Lerp(drawingHandTracker.transform.position, rightHandPositionInvertedY * 8, 0.1f);
@@ -79,6 +79,7 @@ public class Test : MonoBehaviour
                     {
                         colourMenu.SetActive(true);
                         StartCoroutine(nonDrawingHandTracker.GetComponent<ColourChoosing>().PickingColours());
+                        curser.SetActive(true);
                     }
                     if (!drawingHand)
                     {
@@ -132,5 +133,4 @@ public class Test : MonoBehaviour
         stashedSpherePositions = 0;
     }
     */
-
 }
