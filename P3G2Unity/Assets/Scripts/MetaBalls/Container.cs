@@ -8,6 +8,7 @@ public class Container : MonoBehaviour {
     public GameObject metaBallPrefab;
     public ColourChoosing ColourChoosing;
     public float edgeSize; //Size of edge of renderzone. Prevents cut off meshes.
+    public float boxOffsetCompentsater = 0.25f;
     List<GameObject> metaBalls = new List<GameObject>();
     public float metaBallSmoothOutMinDistance = 0.02f;
     public float metaBallSmoothOutMaxDistance = 0.3f;
