@@ -10,6 +10,8 @@ public class Container : MonoBehaviour {
     public float edgeSize; //Size of edge of renderzone. Prevents cut off meshes.
     public float boxOffsetCompentsater = 0.25f;
     List<GameObject> metaBalls = new List<GameObject>();
+    public float gabSmoothDistance = 0.2f;
+    public int gabSmoothIterations = 2;
     public float metaBallSmoothOutMinDistance = 0.02f;
     public float metaBallSmoothOutMaxDistance = 0.3f;
 
@@ -52,26 +54,38 @@ public class Container : MonoBehaviour {
         }
         for (int i = 0; i < globalPositions.Length; i++)
         {
-            if (i > 0)
+            //Smoothing out between gaps;
+            if (i > 0 && gabSmoothIterations > 0)
             {
                 float gapBetweenBalls = (globalPositions[i] - globalPositions[i - 1]).magnitude;
-                if (gapBetweenBalls > metaBallSmoothOutMinDistance && gapBetweenBalls < metaBallSmoothOutMaxDistance)
+                Debug.Log("Gap between balls:" + gapBetweenBalls);
+                for (int j = gabSmoothIterations; j > 0; j--) 
                 {
-                    GameObject extraMetaball = Instantiate(metaBallPrefab, this.transform);
-                    //newMetaBall.transform.localPosition = globalPos - transform.position;
-                    extraMetaball.transform.position = (globalPositions[i]+globalPositions[i-1])/2;
-                    extraMetaball.transform.localScale = new Vector3(.06f, .06f, .06f);
-                    metaBalls.Add(extraMetaball);
+                    if (gapBetweenBalls > gabSmoothDistance*j) //Starts with biggest distance
+                    {
+                        int fillOutBallsCount = j;
+                        for (int k = fillOutBallsCount; k > 0; k--)
+                        {
+                            float lerpValue = (float)(k / (fillOutBallsCount + 1));
+                            Vector3 position = Vector3.Lerp(globalPositions[i] ,globalPositions[i - 1], lerpValue);
+                            InstantiateBall(position);
+                        }
+                        break;
+                    }
                 }
+
             }
-            GameObject newMetaBall = Instantiate(metaBallPrefab, this.transform);
-            //newMetaBall.transform.localPosition = globalPos - transform.position;
-            newMetaBall.transform.position = globalPositions[i];
-            newMetaBall.transform.localScale = new Vector3(.06f, .06f, .06f);
-            metaBalls.Add(newMetaBall);
+            InstantiateBall(globalPositions[i]);
         }
         StartCoroutine(Render());
 
+    }
+    void InstantiateBall (Vector3 InstPosition) 
+    {
+        GameObject newMetaBall = Instantiate(metaBallPrefab, this.transform);
+        newMetaBall.transform.position = InstPosition;
+        newMetaBall.transform.localScale = new Vector3(.06f, .06f, .06f);
+        metaBalls.Add(newMetaBall);
     }
     void ClearMetaBalls()
     {
