@@ -815,6 +815,8 @@ MonoBehaviour:
   ColourChoosing: {fileID: 927094725}
   edgeSize: 0.2
   boxOffsetCompentsater: 1.5
+  gabSmoothDistance: 0.2
+  gabSmoothIterations: 0
   metaBallSmoothOutMinDistance: 0.2
   metaBallSmoothOutMaxDistance: 0.5
   safeZone: 0
