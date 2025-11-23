@@ -1,8 +1,6 @@
 using UnityEngine;
 using System.Collections;
-using TMPro;
 using UnityEngine.UI;
-//using UnityEngine.UIElements;
 
 public class ColourChoosing : MonoBehaviour
 {
@@ -16,6 +14,9 @@ public class ColourChoosing : MonoBehaviour
     public Color drawingColour = Color.gray;
     public Transform mainCameraTransform;
     public LayerMask layerMaskUI;
+    public Material[] pureColours = new Material[7];
+    public Renderer cursorColourRenderer;
+    public GameObject allDrawnBallsContainer;
 
     private void Awake()
     {
@@ -38,31 +39,38 @@ public class ColourChoosing : MonoBehaviour
             RaycastHit hit;
             Vector3 rayDirection = handController.drawingHandTracker.transform.position - mainCameraTransform.position;
             Ray ray = new Ray(mainCameraTransform.position, rayDirection);
-            Physics.Raycast(ray, out hit, layerMaskUI);
+            Physics.Raycast(ray, out hit, (colourMenu.transform.position - mainCameraTransform.position).magnitude + 1f, layerMaskUI);
             if (hit.collider != null)
             {
                 switch (hit.collider.gameObject.name)
                 {
                     case "Gray":
                         drawingColour = Color.gray;
+                        cursorColourRenderer.material = pureColours[0];
                         break;
                     case "Blue":
                         drawingColour = Color.blue;
+                        cursorColourRenderer.material = pureColours[1];
                         break;
                     case "Red":
                         drawingColour = Color.red;
+                        cursorColourRenderer.material = pureColours[2];
                         break;
                     case "Green":
                         drawingColour = Color.green;
+                        cursorColourRenderer.material = pureColours[3];
                         break;
                     case "Yellow":
                         drawingColour = Color.yellow;
+                        cursorColourRenderer.material = pureColours[4];
                         break;
                     case "Black":
                         drawingColour = Color.black;
+                        cursorColourRenderer.material = pureColours[5];
                         break;
                     case "Magenta":
                         drawingColour = Color.magenta;
+                        cursorColourRenderer.material = pureColours[6];
                         break;
                     case "Reset":
                         resetHeldTime += Time.deltaTime;
@@ -92,5 +100,9 @@ public class ColourChoosing : MonoBehaviour
         resetHeldTime = 0;
         resetCircle.GetComponent<Image>().fillAmount = 0;
         resetCircle1.GetComponent<Image>().fillAmount = 0;
+        for (int i = 0; i < allDrawnBallsContainer.transform.childCount; i++)
+        {
+            Destroy(allDrawnBallsContainer.transform.GetChild(i).gameObject);
+        }
     }
 }
