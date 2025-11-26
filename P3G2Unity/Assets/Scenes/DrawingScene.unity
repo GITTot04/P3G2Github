@@ -1007,20 +1007,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   metaBallPrefab: {fileID: 2035581274862937256, guid: e9bb4481b37b182438e38468c203d7fd, type: 3}
   ColourChoosing: {fileID: 927094725}
+  drawZone: {fileID: 1908180094}
+  material: {fileID: 2100000, guid: 2a26b4785c422e943b58fee950ff2517, type: 2}
   edgeSize: 0.2
   boxOffsetCompentsater: 1.5
   gabSmoothDistance: 0.06
   gabSmoothIterations: 15
   metaBallSmoothOutMinDistance: 0.03
   metaBallSmoothOutMaxDistance: 0.5
+  timePerPosMin: 0.02
+  timePerPosMax: 0.1
   safeZone: 0
   resolution: 0.05
   threshold: 1
   computeShader: {fileID: 7200000, guid: 9bcc9560470e2b4439e048851b4c0470, type: 3}
   calculateNormals: 1
   gridSize: 1
-  drawZone: {fileID: 1908180094}
-  material: {fileID: 2100000, guid: 2a26b4785c422e943b58fee950ff2517, type: 2}
 --- !u!4 &460938876
 Transform:
   m_ObjectHideFlags: 0
@@ -7606,7 +7608,7 @@ MonoBehaviour:
   curser: {fileID: 1414898383}
   drawingSphere: {fileID: 1450242469069308458, guid: b05d026c372ffd34c9a79e77a2f3ea70, type: 3}
   drawingHand: 1
-  mouseDraw: 0
+  mouseDraw: 1
   drawManager: {fileID: 1323331396}
 --- !u!4 &1599694850
 Transform:
