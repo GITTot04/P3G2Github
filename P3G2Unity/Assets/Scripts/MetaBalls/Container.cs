@@ -104,10 +104,10 @@ public class Container : MonoBehaviour {
     {
         yield return null;
         material.color = ColourChoosing.drawingColour;
-
+        float timePerPos = drawClock / metaBalls.Count;
         float timeToIntensityFactor = (timePerPosMax - timePerPosMin);
-        float drawIntensity = 1 - ((drawClock/metaBalls.Count- timePerPosMin))/ timeToIntensityFactor;
-
+        float drawIntensity = 1 - (timePerPos - timePerPosMin) / timeToIntensityFactor;
+        Debug.Log(drawIntensity);
         if (drawIntensity < 0)
         {
             drawIntensity = 0;
@@ -116,7 +116,9 @@ public class Container : MonoBehaviour {
         {
             drawIntensity = 1;
         }
-        //material.SetFloat("_DrawIntensity", drawIntensity);
+        material.SetFloat("_DrawIntensity", drawIntensity);
+       
+
         this.grid.evaluateAll(this.GetComponentsInChildren<MetaBall>());
         Mesh mesh = this.GetComponent<MeshFilter>().mesh;
         mesh.Clear();
