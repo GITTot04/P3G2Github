@@ -14,7 +14,7 @@ public class Container : MonoBehaviour {
 
     [Header("RenderBox settings")]
     public float edgeSize; //Size of edge of renderzone. Prevents cut off meshes.
-    public float boxOffsetCompentsater = 0.25f;
+    public float boxOffsetCompentsater;
     List<GameObject> metaBalls = new List<GameObject>();
 
     [Header("Gab-fill smoothing")]
@@ -39,6 +39,7 @@ public class Container : MonoBehaviour {
     public int gridSize;
 
     public void Start() {
+        boxOffsetCompentsater = transform.localScale.x / 4f;
         this.grid = new CubeGrid(this, this.computeShader);
         Render();
     }
