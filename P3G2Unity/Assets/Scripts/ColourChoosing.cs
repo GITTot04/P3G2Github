@@ -8,8 +8,13 @@ public class ColourChoosing : MonoBehaviour
     public GameObject resetCircle;
     public GameObject resetCircle1;
     float resetFillAmount;
+    public GameObject calibrateCircle;
+    public GameObject calibrateCircle1;
+    float calibrateFillAmount;
     float timeToReset = 5f;
     float resetHeldTime;
+    float timeToCalibrate = 5f;
+    float calibrateHeldTime;
     public Test handController;
     public Color drawingColour = Color.gray;
     public Transform mainCameraTransform;
@@ -17,6 +22,7 @@ public class ColourChoosing : MonoBehaviour
     public Material[] pureColours = new Material[7];
     public Renderer cursorColourRenderer;
     public GameObject allDrawnBallsContainer;
+    float rotationSpeed = 0.2f;
 
     private void Awake()
     {
@@ -81,6 +87,30 @@ public class ColourChoosing : MonoBehaviour
                         {
                             ResetDrawing();
                         }
+                        calibrateHeldTime = 0;
+                        calibrateCircle.GetComponent<Image>().fillAmount = 0;
+                        calibrateCircle1.GetComponent<Image>().fillAmount = 0;
+                        break;
+                    case "Calibrate":
+                        calibrateHeldTime += Time.deltaTime;
+                        calibrateFillAmount = calibrateHeldTime / timeToCalibrate;
+                        calibrateCircle.GetComponent<Image>().fillAmount = calibrateFillAmount;
+                        calibrateCircle1.GetComponent<Image>().fillAmount = calibrateFillAmount;
+                        if (calibrateFillAmount >= 1)
+                        {
+                            calibrateHeldTime = 0f;
+                            calibrateFillAmount = 0f;
+                            Test.Calibrate();
+                        }
+                        resetHeldTime = 0;
+                        resetCircle.GetComponent<Image>().fillAmount = 0;
+                        resetCircle1.GetComponent<Image>().fillAmount = 0;
+                        break;
+                    case "Turn Left":
+                        allDrawnBallsContainer.transform.RotateAround(allDrawnBallsContainer.transform.position, new Vector3(0, 1, 0), rotationSpeed);
+                        break;
+                    case "Turn Right":
+                        allDrawnBallsContainer.transform.RotateAround(allDrawnBallsContainer.transform.position, new Vector3(0, 1, 0), rotationSpeed);
                         break;
                     default:
                         break;
@@ -91,6 +121,10 @@ public class ColourChoosing : MonoBehaviour
                 resetHeldTime = 0;
                 resetCircle.GetComponent<Image>().fillAmount = 0;
                 resetCircle1.GetComponent<Image>().fillAmount = 0;
+                calibrateHeldTime = 0;
+                calibrateCircle.GetComponent<Image>().fillAmount = 0;
+                calibrateCircle1.GetComponent<Image>().fillAmount = 0;
+
             }
             yield return null;
         }

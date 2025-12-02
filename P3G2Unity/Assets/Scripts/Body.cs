@@ -64,6 +64,7 @@ public struct Body : ISerializable
             Test.leftShoulderPosition = new UnityEngine.Vector3(body.Skeleton.GetJoint(5).Position.X / 1000.0f, body.Skeleton.GetJoint(5).Position.Y / 1000.0f, body.Skeleton.GetJoint(5).Position.Z / 1000.0f);
             Test.rightHandPosition = new UnityEngine.Vector3(body.Skeleton.GetJoint(15).Position.X / 1000.0f, body.Skeleton.GetJoint(15).Position.Y / 1000.0f, body.Skeleton.GetJoint(15).Position.Z / 1000.0f);
             Test.rightShoulderPosition = new UnityEngine.Vector3(body.Skeleton.GetJoint(12).Position.X / 1000.0f, body.Skeleton.GetJoint(12).Position.Y / 1000.0f, body.Skeleton.GetJoint(12).Position.Z / 1000.0f);
+            Test.chestPosition = new UnityEngine.Vector3(body.Skeleton.GetJoint(2).Position.X / 1000.0f, body.Skeleton.GetJoint(2).Position.Y / 1000.0f, body.Skeleton.GetJoint(2).Position.Z / 1000.0f);
             // ^^
             JointRotations[bodyPoint] = body.Skeleton.GetJoint(bodyPoint).Quaternion;
             JointPrecisions[bodyPoint] = body.Skeleton.GetJoint(bodyPoint).ConfidenceLevel;

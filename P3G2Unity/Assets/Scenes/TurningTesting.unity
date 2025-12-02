@@ -1131,6 +1131,9 @@ MonoBehaviour:
   computeShader: {fileID: 7200000, guid: 9bcc9560470e2b4439e048851b4c0470, type: 3}
   calculateNormals: 1
   gridSize: 1
+
+  drawZone: {fileID: 1908180094}
+  material: {fileID: 2100000, guid: 2a26b4785c422e943b58fee950ff2517, type: 2}
 --- !u!4 &460938876
 Transform:
   m_ObjectHideFlags: 0
@@ -6796,6 +6799,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resetCircle: {fileID: 172578240}
   resetCircle1: {fileID: 445945616}
+  calibrateCircle: {fileID: 1997497276}
+  calibrateCircle1: {fileID: 1773886758}
   handController: {fileID: 1599694849}
   drawingColour: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   mainCameraTransform: {fileID: 330585546}
