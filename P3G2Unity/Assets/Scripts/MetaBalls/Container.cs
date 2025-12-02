@@ -107,7 +107,7 @@ public class Container : MonoBehaviour {
         float timePerPos = drawClock / metaBalls.Count;
         float timeToIntensityFactor = (timePerPosMax - timePerPosMin);
         float drawIntensity = 1 - (timePerPos - timePerPosMin) / timeToIntensityFactor;
-        Debug.Log(timePerPos);
+        //Debug.Log(timePerPos);
         if (drawIntensity < 0)
         {
             drawIntensity = 0;
