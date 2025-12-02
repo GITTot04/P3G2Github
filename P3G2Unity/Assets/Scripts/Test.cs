@@ -42,6 +42,12 @@ public class Test : MonoBehaviour
     {
         if (!mouseDraw)
         {
+            //Shader stuff:
+            Shader.SetGlobalVector("_HandPosition", drawingHandTracker.transform.position);
+
+
+            //The rest:
+
             leftHandPositionInvertedYZ = new Vector3(leftHandPosition.x, leftHandPosition.y * -1, leftHandPosition.z * -1);
             leftShoulderPositionInvertedY = new Vector3(leftShoulderPosition.x, leftShoulderPosition.y * -1, leftShoulderPosition.z);
             rightHandPositionInvertedYZ = new Vector3(rightHandPosition.x, rightHandPosition.y * -1, rightHandPosition.z * -1);
@@ -148,7 +154,7 @@ public class Test : MonoBehaviour
     {
         chestPositionInvertedYZ = new Vector3(chestPosition.x, chestPosition.y * -1, chestPosition.z * -1);
         Debug.Log(meshContainer.name);
-        meshContainer.transform.position = new Vector3(chestPositionInvertedYZ.x, chestPositionInvertedYZ.y, chestPositionInvertedYZ.z - 4f);
+        meshContainer.transform.position = new Vector3(chestPositionInvertedYZ.x, chestPositionInvertedYZ.y, chestPositionInvertedYZ.z - 10f);
     }
 
     IEnumerator InitialCalibration()

@@ -519,7 +519,7 @@ Transform:
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.000000104308114}
-  m_LocalPosition: {x: 0, y: 3.2, z: 15}
+  m_LocalPosition: {x: 0, y: 3.2, z: 5.39}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1117,7 +1117,7 @@ MonoBehaviour:
   ColourChoosing: {fileID: 927094725}
   drawZone: {fileID: 1908180094}
   material: {fileID: 2100000, guid: 2a26b4785c422e943b58fee950ff2517, type: 2}
-  edgeSize: 0.4
+  edgeSize: 0.5
   boxOffsetCompentsater: 1.5
   gabSmoothDistance: 0.06
   gabSmoothIterations: 15
