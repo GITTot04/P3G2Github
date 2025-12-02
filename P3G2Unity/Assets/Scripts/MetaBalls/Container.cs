@@ -5,16 +5,30 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 public class Container : MonoBehaviour {
+
+    [Header("References")]
     public GameObject metaBallPrefab;
     public ColourChoosing ColourChoosing;
+    public GameObject drawZone;
+    public Material material;
+
+    [Header("RenderBox settings")]
     public float edgeSize; //Size of edge of renderzone. Prevents cut off meshes.
     public float boxOffsetCompentsater = 0.25f;
     List<GameObject> metaBalls = new List<GameObject>();
+
+    [Header("Gab-fill smoothing")]
     public float gabSmoothDistance = 0.2f;
     public int gabSmoothIterations = 2;
     public float metaBallSmoothOutMinDistance = 0.02f;
     public float metaBallSmoothOutMaxDistance = 0.3f;
 
+    [Header("Splashing")]
+    public float timePerPosMin;
+    public float timePerPosMax;
+    float drawClock = 0;
+
+    [Header("MetaBalls Values")]
     public float safeZone;
     public float resolution;
     public float threshold;
@@ -24,8 +38,6 @@ public class Container : MonoBehaviour {
     private CubeGrid grid;
     public int gridSize;
 
-    public GameObject drawZone;
-    public Material material;
     public void Start() {
         this.grid = new CubeGrid(this, this.computeShader);
         Render();
@@ -34,25 +46,15 @@ public class Container : MonoBehaviour {
 
     public void Update() {
 
-        
+        drawClock += Time.deltaTime;
     }
     public void InstantiateMetaBalls(Vector3[] globalPositions, int arrayLength, Vector3 lowestPosition) 
     {
-
+           
         transform.position = new Vector3( 
         lowestPosition.x + transform.localScale.x / 2 - edgeSize, 
         lowestPosition.y + transform.localScale.y / 2 - edgeSize, 
         lowestPosition.z + transform.localScale.z / 2 - edgeSize);
-        /*
-        for (int i = 0; i < arrayLength; i++)
-        {
-            GameObject newMetaBall = Instantiate(metaBallPrefab, this.transform);
-            //newMetaBall.transform.localPosition = globalPos - transform.position;
-            newMetaBall.transform.position = globalPositions[i];
-            newMetaBall.transform.localScale = new Vector3(.06f, .06f, .06f);
-            metaBalls.Add(newMetaBall);
-        }*/
-
 
         for (int i = 0; i < arrayLength; i++)
         {
@@ -72,7 +74,6 @@ public class Container : MonoBehaviour {
                             Vector3 position = Vector3.Lerp(globalPositions[i] ,globalPositions[i - 1], lerpValue);
                             InstantiateBall(position);
                         }
-                       // Debug.Log("Doing interatuins: " + j);
                         break;
                     }
                 }
@@ -103,16 +104,29 @@ public class Container : MonoBehaviour {
     {
         yield return null;
         material.color = ColourChoosing.drawingColour;
+        float timePerPos = drawClock / metaBalls.Count;
+        float timeToIntensityFactor = (timePerPosMax - timePerPosMin);
+        float drawIntensity = 1 - (timePerPos - timePerPosMin) / timeToIntensityFactor;
+        Debug.Log(timePerPos);
+        if (drawIntensity < 0)
+        {
+            drawIntensity = 0;
+        }
+        else if (drawIntensity > 1)
+        {
+            drawIntensity = 1;
+        }
+        material.SetFloat("_DrawIntensity", drawIntensity);
+       
 
         this.grid.evaluateAll(this.GetComponentsInChildren<MetaBall>());
         Mesh mesh = this.GetComponent<MeshFilter>().mesh;
         mesh.Clear();
         mesh.vertices = this.grid.vertices.ToArray();
         mesh.triangles = this.grid.getTriangles();
-        //mesh.RecalculateNormals();
+
         RecalculateSmoothNormals(mesh);
        
-
 
         GameObject drawZoneNewObj = new GameObject();
         drawZoneNewObj.transform.localScale = transform.localScale;
@@ -127,52 +141,16 @@ public class Container : MonoBehaviour {
         mesh.Clear();
 
         ClearMetaBalls();
+        drawClock = 0f;
 
     }
-    static void RecalculateNormalsSeamless(Mesh mesh) //NOT in use
-    {
-        var trianglesOriginal = mesh.triangles;
-        var triangles = trianglesOriginal.ToArray();
-
-        var vertices = mesh.vertices;
-
-        var mergeIndices = new Dictionary<int, int>();
-
-        for (int i = 0; i < vertices.Length; i++)
-        {
-            var vertexHash = vertices[i].GetHashCode();
-
-            if (mergeIndices.TryGetValue(vertexHash, out var index))
-            {
-                for (int j = 0; j < triangles.Length; j++)
-                    if (triangles[j] == i)
-                        triangles[j] = index;
-            }
-            else
-                mergeIndices.Add(vertexHash, i);
-        }
-
-        mesh.triangles = triangles;
-
-        var normals = new Vector3[vertices.Length];
-
-        mesh.RecalculateNormals();
-        var newNormals = mesh.normals;
-
-        for (int i = 0; i < vertices.Length; i++)
-            if (mergeIndices.TryGetValue(vertices[i].GetHashCode(), out var index))
-                normals[i] = newNormals[index];
-
-        mesh.triangles = trianglesOriginal;
-        mesh.normals = normals;
-    }
-
-    public static void RecalculateSmoothNormals(Mesh mesh, float mergeEpsilon = 0.000001f, float smoothingAngle = 180f, int laplacianIterations = 0)
+  
+    public static void RecalculateSmoothNormals(Mesh mesh, float mergeEpsilon = 0.000001f, float smoothingAngle = 180f)
     {
         Vector3[] vertices = mesh.vertices;
         int[] triangles = mesh.triangles;
 
-        // Step 1: Merge nearby vertices
+        //Merge nearby vertices
         Dictionary<int, int> mergeIndices = new Dictionary<int, int>();
         List<Vector3> mergedVertices = new List<Vector3>();
         int[] remap = new int[vertices.Length];
@@ -196,7 +174,7 @@ public class Container : MonoBehaviour {
             }
         }
 
-        // Step 2: Remap triangles
+        //Remap triangles
         int[] newTriangles = new int[triangles.Length];
         for (int i = 0; i < triangles.Length; i++)
             newTriangles[i] = remap[triangles[i]];
@@ -205,48 +183,15 @@ public class Container : MonoBehaviour {
         tempMesh.vertices = mergedVertices.ToArray();
         tempMesh.triangles = newTriangles;
 
-        // Step 3: Recalculate normals
+        //Recalculate normals
         tempMesh.RecalculateNormals();
 
         Vector3[] smoothNormals = new Vector3[vertices.Length];
         for (int i = 0; i < vertices.Length; i++)
             smoothNormals[i] = tempMesh.normals[remap[i]];
 
-        // Step 4: Optional Laplacian smoothing
-        if (laplacianIterations > 0)
-        {
-            List<int>[] vertexNeighbors = new List<int>[vertices.Length];
-            for (int i = 0; i < vertices.Length; i++)
-                vertexNeighbors[i] = new List<int>();
-
-            for (int i = 0; i < triangles.Length; i += 3)
-            {
-                int a = triangles[i];
-                int b = triangles[i + 1];
-                int c = triangles[i + 2];
-                if (!vertexNeighbors[a].Contains(b)) vertexNeighbors[a].Add(b);
-                if (!vertexNeighbors[a].Contains(c)) vertexNeighbors[a].Add(c);
-                if (!vertexNeighbors[b].Contains(a)) vertexNeighbors[b].Add(a);
-                if (!vertexNeighbors[b].Contains(c)) vertexNeighbors[b].Add(c);
-                if (!vertexNeighbors[c].Contains(a)) vertexNeighbors[c].Add(a);
-                if (!vertexNeighbors[c].Contains(b)) vertexNeighbors[c].Add(b);
-            }
-
-            for (int iter = 0; iter < laplacianIterations; iter++)
-            {
-                Vector3[] temp = new Vector3[smoothNormals.Length];
-                for (int i = 0; i < smoothNormals.Length; i++)
-                {
-                    Vector3 sum = smoothNormals[i];
-                    foreach (int n in vertexNeighbors[i])
-                        sum += smoothNormals[n];
-                    temp[i] = sum.normalized;
-                }
-                smoothNormals = temp;
-            }
-        }
-
-        // Step 5: Apply normals to original mesh
+        
+        //Apply normals to original mesh
         mesh.normals = smoothNormals;
     }
 }
