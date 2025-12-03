@@ -11,6 +11,11 @@ public class ConfigLoader : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(this); // We made this
+        }
+        else
+        {
+            Destroy(this); // And this
         }
     }
     // Name of scene config file.

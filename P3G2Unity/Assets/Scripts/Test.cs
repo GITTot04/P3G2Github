@@ -56,6 +56,12 @@ public class Test : MonoBehaviour
             rightShoulderPositionInvertedY = new Vector3(rightShoulderPosition.x, rightShoulderPosition.y * -1, rightShoulderPosition.z);
             if (!doneDrawing)
             {
+                if (doneMenu.activeSelf)
+                {
+                    StopAllCoroutines();
+                    doneMenu.SetActive(false);
+                    curser.SetActive(false);
+                }
                 if (!drawingHand && Mathf.Abs(rightHandPositionInvertedYZ.y - rightShoulderPositionInvertedY.y) > 0.2) // 0 = left, 1 = right
                 {
                     if (colourMenu.activeSelf)
