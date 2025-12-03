@@ -1,5 +1,6 @@
 using JetBrains.Annotations;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -24,6 +25,16 @@ public class DrawManager : MonoBehaviour
     //For CheckInDrawZone();
     Vector3 lowestPosition;
     Vector3 highestPosition;
+
+    //For shader glittering:
+    [Header("Shader glittering")]
+    public float averageSpeedMin;
+    public float averageSpeedMax;
+
+    Vector3 lastPosition;
+    float[] speedData = new float[400];
+    int speedDataPosition = 0;
+    float movementSpeedFactor = 0;
     private void Awake()
     {
         metaBallPositions = new Vector3[metaBallMaxCount];
@@ -46,10 +57,14 @@ public class DrawManager : MonoBehaviour
         framesWithoutDraw++;
 
         drawZoneDistance = container.transform.localScale.x - container.edgeSize*2 - container.boxOffsetCompentsater;
+
+        //Shader glittering
+        Shader.SetGlobalFloat("_MovementSpeed", movementSpeedFactor);
     }
 
     public void Draw(Vector3 position)
     {
+        AddSpeedDataPoint(position);
         isDrawing = true;
         framesWithoutDraw = 0;
 
@@ -168,6 +183,31 @@ public class DrawManager : MonoBehaviour
         {
             metaBallPositions[metaBallArrayPosition] = position;
             metaBallArrayPosition++;
+        }
+    }
+
+    void AddSpeedDataPoint(Vector3 position)
+    {
+        float newPoint = (lastPosition - position).magnitude;
+        lastPosition = position;
+        speedData[speedDataPosition] = newPoint; 
+        if (speedDataPosition >= speedData.Count()-1) 
+        {
+            speedDataPosition = 0;
+        }
+        else
+        {
+            speedDataPosition++;
+        }
+      
+        float averageSpeed = speedData.Average();
+        movementSpeedFactor = (averageSpeed - averageSpeedMin) / (averageSpeedMax - averageSpeedMin);
+        if (movementSpeedFactor > 1)
+        {
+            movementSpeedFactor = 1;
+        } else if (movementSpeedFactor < 0) 
+        {
+            movementSpeedFactor = 0;
         }
     }
 }

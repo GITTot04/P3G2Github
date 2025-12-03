@@ -249,5 +249,16 @@ public class ColourChoosing : MonoBehaviour
                 break;
         }
     }
+    void Update()
+    {
+        if (Input.GetKey("q"))
+        {
+            allDrawnBallsContainer.transform.RotateAround(allDrawnBallsContainer.transform.position, new Vector3(0, 1, 0), rotationSpeed);
+        }
+        if (Input.GetKey("e"))
+        {
+            allDrawnBallsContainer.transform.RotateAround(allDrawnBallsContainer.transform.position, new Vector3(0, 1, 0), rotationSpeed);
+        }
+    }
 
 }
