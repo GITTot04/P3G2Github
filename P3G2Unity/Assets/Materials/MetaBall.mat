@@ -95,7 +95,7 @@ Material:
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _DrawIntensity: 0.65314656
+    - _DrawIntensity: 0.03803485
     - _DrawSpeed: 0.57
     - _DstBlend: 10
     - _DstBlendAlpha: 10
