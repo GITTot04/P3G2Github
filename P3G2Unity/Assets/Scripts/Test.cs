@@ -2,22 +2,12 @@ using UnityEngine;
 using System.Collections;
 public class Test : MonoBehaviour
 {
-    public static Vector3 leftHandPosition;
-    public static Vector3 leftShoulderPosition;
-    public static Vector3 rightHandPosition;
-    public static Vector3 rightShoulderPosition;
-    public static Vector3 chestPosition;
-    Vector3 leftHandPositionInvertedYZ;
-    Vector3 leftShoulderPositionInvertedY;
-    Vector3 rightHandPositionInvertedYZ;
-    Vector3 rightShoulderPositionInvertedY;
     static Vector3 chestPositionInvertedYZ;
     public GameObject drawingHandTracker;
     public GameObject nonDrawingHandTracker;
-    public GameObject curser;
+    public GameObject cursor;
     ParticleSystem followingParticles;
     public GameObject drawingSphere;
-    public bool drawingHand; // 0 = left, 1 = right
     GameObject colourMenu;
     GameObject doneMenu;
     public bool doneDrawing;
@@ -25,7 +15,6 @@ public class Test : MonoBehaviour
 
     public static float calibrateZCompensator = -18f;
 
-    public float sensitivity = 5;
 
 
     public bool mouseDraw = false;
@@ -50,40 +39,40 @@ public class Test : MonoBehaviour
             //Shader stuff:
             Shader.SetGlobalVector("_HandPosition", drawingHandTracker.transform.position);
 
-
             //The rest:
-
-            leftHandPositionInvertedYZ = new Vector3(leftHandPosition.x * sensitivity, leftHandPosition.y * sensitivity * - 1, leftHandPosition.z * sensitivity * -1);
-            leftShoulderPositionInvertedY = new Vector3(leftShoulderPosition.x * sensitivity, leftShoulderPosition.y * sensitivity * - 1, leftShoulderPosition.z * sensitivity);
-            rightHandPositionInvertedYZ = new Vector3(rightHandPosition.x * sensitivity, rightHandPosition.y * sensitivity*  - 1, rightHandPosition.z * sensitivity * -1);
-            rightShoulderPositionInvertedY = new Vector3(rightShoulderPosition.x * sensitivity, rightShoulderPosition.y * sensitivity * - 1, rightShoulderPosition.z * sensitivity);
             if (!doneDrawing)
             {
-                if (!drawingHand && Mathf.Abs(rightHandPositionInvertedYZ.y - rightShoulderPositionInvertedY.y) > 0.2) // 0 = left, 1 = right
+                if (doneMenu.activeSelf)
+                {
+                    StopAllCoroutines();
+                    doneMenu.SetActive(false);
+                    cursor.SetActive(false);
+                }
+                if (!MenuController.menuControllerInstance.drawingHand && Mathf.Abs(MenuController.menuControllerInstance.rightHandPositionInvertedYZ.y - MenuController.menuControllerInstance.rightShoulderPositionInvertedY.y) > 0.2)
                 {
                     if (colourMenu.activeSelf)
                     {
                         StopAllCoroutines();
                         colourMenu.SetActive(false);
-                        curser.SetActive(false);
+                        cursor.SetActive(false);
                     }
                     followingParticles.startColor = Color.green;
-                    drawingHandTracker.transform.position = Vector3.Lerp(drawingHandTracker.transform.position, leftHandPositionInvertedYZ * 8, 0.1f);
-                    nonDrawingHandTracker.transform.position = Vector3.Lerp(nonDrawingHandTracker.transform.position, rightHandPositionInvertedYZ * 8, 0.1f);
+                    drawingHandTracker.transform.position = Vector3.Lerp(drawingHandTracker.transform.position, MenuController.menuControllerInstance.leftHandPositionInvertedYZ * 8, 0.1f);
+                    nonDrawingHandTracker.transform.position = Vector3.Lerp(nonDrawingHandTracker.transform.position, MenuController.menuControllerInstance.rightHandPositionInvertedYZ * 8, 0.1f);
 
                     drawManager.Draw(drawingHandTracker.transform.position);
                 }
-                else if (drawingHand && Mathf.Abs(leftHandPositionInvertedYZ.y - leftShoulderPositionInvertedY.y) > 0.2)
+                else if (MenuController.menuControllerInstance.drawingHand && Mathf.Abs(MenuController.menuControllerInstance.leftHandPositionInvertedYZ.y - MenuController.menuControllerInstance.leftShoulderPositionInvertedY.y) > 0.2)
                 {
                     if (colourMenu.activeSelf)
                     {
                         StopAllCoroutines();
                         colourMenu.SetActive(false);
-                        curser.SetActive(false);
+                        cursor.SetActive(false);
                     }
                     followingParticles.startColor = Color.green;
-                    drawingHandTracker.transform.position = Vector3.Lerp(drawingHandTracker.transform.position, rightHandPositionInvertedYZ * 8, 0.1f);
-                    nonDrawingHandTracker.transform.position = Vector3.Lerp(nonDrawingHandTracker.transform.position, leftHandPositionInvertedYZ * 8, 0.1f);
+                    drawingHandTracker.transform.position = Vector3.Lerp(drawingHandTracker.transform.position, MenuController.menuControllerInstance.rightHandPositionInvertedYZ * 8, 0.1f);
+                    nonDrawingHandTracker.transform.position = Vector3.Lerp(nonDrawingHandTracker.transform.position, MenuController.menuControllerInstance.leftHandPositionInvertedYZ * 8, 0.1f);
 
                     drawManager.Draw(drawingHandTracker.transform.position);
                 }
@@ -94,17 +83,17 @@ public class Test : MonoBehaviour
                     {
                         colourMenu.SetActive(true);
                         StartCoroutine(nonDrawingHandTracker.GetComponent<ColourChoosing>().PickingColours());
-                        curser.SetActive(true);
+                        cursor.SetActive(true);
                     }
-                    if (!drawingHand)
+                    if (!MenuController.menuControllerInstance.drawingHand)
                     {
-                        drawingHandTracker.transform.position = Vector3.Lerp(drawingHandTracker.transform.position, leftHandPositionInvertedYZ * 8, 0.1f);
-                        nonDrawingHandTracker.transform.position = Vector3.Lerp(nonDrawingHandTracker.transform.position, rightHandPositionInvertedYZ * 8, 0.1f);
+                        drawingHandTracker.transform.position = Vector3.Lerp(drawingHandTracker.transform.position, MenuController.menuControllerInstance.leftHandPositionInvertedYZ * 8, 0.1f);
+                        nonDrawingHandTracker.transform.position = Vector3.Lerp(nonDrawingHandTracker.transform.position, MenuController.menuControllerInstance.rightHandPositionInvertedYZ * 8, 0.1f);
                     }
                     else
                     {
-                        drawingHandTracker.transform.position = Vector3.Lerp(drawingHandTracker.transform.position, rightHandPositionInvertedYZ * 8, 0.1f);
-                        nonDrawingHandTracker.transform.position = Vector3.Lerp(nonDrawingHandTracker.transform.position, leftHandPositionInvertedYZ * 8, 0.1f);
+                        drawingHandTracker.transform.position = Vector3.Lerp(drawingHandTracker.transform.position, MenuController.menuControllerInstance.rightHandPositionInvertedYZ * 8, 0.1f);
+                        nonDrawingHandTracker.transform.position = Vector3.Lerp(nonDrawingHandTracker.transform.position, MenuController.menuControllerInstance.leftHandPositionInvertedYZ * 8, 0.1f);
                     }
                 }
             }
@@ -114,24 +103,24 @@ public class Test : MonoBehaviour
                 {
                     colourMenu.SetActive(false);
                     StopAllCoroutines();
-                    curser.SetActive(false);
+                    cursor.SetActive(false);
                 }
                 if (!doneMenu.activeSelf)
                 {
                     followingParticles.startColor = Color.red;
                     doneMenu.SetActive(true);
                     StartCoroutine(nonDrawingHandTracker.GetComponent<ColourChoosing>().PickingColours());
-                    curser.SetActive(true);
+                    cursor.SetActive(true);
                 }
-                if (!drawingHand)
+                if (!MenuController.menuControllerInstance.drawingHand)
                 {
-                    drawingHandTracker.transform.position = Vector3.Lerp(drawingHandTracker.transform.position, leftHandPositionInvertedYZ * 8, 0.1f);
-                    nonDrawingHandTracker.transform.position = Vector3.Lerp(nonDrawingHandTracker.transform.position, rightHandPositionInvertedYZ * 8, 0.1f);
+                    drawingHandTracker.transform.position = Vector3.Lerp(drawingHandTracker.transform.position, MenuController.menuControllerInstance.leftHandPositionInvertedYZ * 8, 0.1f);
+                    nonDrawingHandTracker.transform.position = Vector3.Lerp(nonDrawingHandTracker.transform.position, MenuController.menuControllerInstance.rightHandPositionInvertedYZ * 8, 0.1f);
                 }
                 else
                 {
-                    drawingHandTracker.transform.position = Vector3.Lerp(drawingHandTracker.transform.position, rightHandPositionInvertedYZ * 8, 0.1f);
-                    nonDrawingHandTracker.transform.position = Vector3.Lerp(nonDrawingHandTracker.transform.position, leftHandPositionInvertedYZ * 8, 0.1f);
+                    drawingHandTracker.transform.position = Vector3.Lerp(drawingHandTracker.transform.position, MenuController.menuControllerInstance.rightHandPositionInvertedYZ * 8, 0.1f);
+                    nonDrawingHandTracker.transform.position = Vector3.Lerp(nonDrawingHandTracker.transform.position, MenuController.menuControllerInstance.leftHandPositionInvertedYZ * 8, 0.1f);
                 }
             }
         }
@@ -159,14 +148,14 @@ public class Test : MonoBehaviour
 
     public static void Calibrate()
     {
-        chestPositionInvertedYZ = new Vector3(chestPosition.x, chestPosition.y * -1, chestPosition.z * -1);
+        chestPositionInvertedYZ = new Vector3(MenuController.chestPosition.x, MenuController.chestPosition.y * -1, MenuController.chestPosition.z * -1);
 
         meshContainer.transform.position = new Vector3(chestPositionInvertedYZ.x, chestPositionInvertedYZ.y, (chestPositionInvertedYZ.z + calibrateZCompensator));
     }
 
     IEnumerator InitialCalibration()
     {
-        while (chestPosition == new Vector3(0, 0, 0))
+        while (MenuController.chestPosition == new Vector3(0, 0, 0))
         {
             yield return null;
         }
