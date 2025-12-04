@@ -33,7 +33,7 @@ public class DrawManager : MonoBehaviour
     public float averageSpeedMax;
 
     Vector3 lastPosition;
-    float[] speedData = new float[400];
+    float[] speedData = new float[200];
     int speedDataPosition = 0;
     float movementSpeedFactor = 0;
     private void Awake()
