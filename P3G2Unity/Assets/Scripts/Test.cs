@@ -23,6 +23,9 @@ public class Test : MonoBehaviour
     public bool doneDrawing;
     public static GameObject meshContainer;
 
+    public static float calibrateZCompensator = -18f;
+
+    public float sensitivity = 5;
 
 
     public bool mouseDraw = false;
@@ -50,10 +53,10 @@ public class Test : MonoBehaviour
 
             //The rest:
 
-            leftHandPositionInvertedYZ = new Vector3(leftHandPosition.x, leftHandPosition.y * -1, leftHandPosition.z * -1);
-            leftShoulderPositionInvertedY = new Vector3(leftShoulderPosition.x, leftShoulderPosition.y * -1, leftShoulderPosition.z);
-            rightHandPositionInvertedYZ = new Vector3(rightHandPosition.x, rightHandPosition.y * -1, rightHandPosition.z * -1);
-            rightShoulderPositionInvertedY = new Vector3(rightShoulderPosition.x, rightShoulderPosition.y * -1, rightShoulderPosition.z);
+            leftHandPositionInvertedYZ = new Vector3(leftHandPosition.x * sensitivity, leftHandPosition.y * sensitivity * - 1, leftHandPosition.z * sensitivity * -1);
+            leftShoulderPositionInvertedY = new Vector3(leftShoulderPosition.x * sensitivity, leftShoulderPosition.y * sensitivity * - 1, leftShoulderPosition.z * sensitivity);
+            rightHandPositionInvertedYZ = new Vector3(rightHandPosition.x * sensitivity, rightHandPosition.y * sensitivity*  - 1, rightHandPosition.z * sensitivity * -1);
+            rightShoulderPositionInvertedY = new Vector3(rightShoulderPosition.x * sensitivity, rightShoulderPosition.y * sensitivity * - 1, rightShoulderPosition.z * sensitivity);
             if (!doneDrawing)
             {
                 if (!drawingHand && Mathf.Abs(rightHandPositionInvertedYZ.y - rightShoulderPositionInvertedY.y) > 0.2) // 0 = left, 1 = right
@@ -158,7 +161,7 @@ public class Test : MonoBehaviour
     {
         chestPositionInvertedYZ = new Vector3(chestPosition.x, chestPosition.y * -1, chestPosition.z * -1);
 
-        meshContainer.transform.position = new Vector3(chestPositionInvertedYZ.x, chestPositionInvertedYZ.y, chestPositionInvertedYZ.z - 10f);
+        meshContainer.transform.position = new Vector3(chestPositionInvertedYZ.x, chestPositionInvertedYZ.y, (chestPositionInvertedYZ.z + calibrateZCompensator));
     }
 
     IEnumerator InitialCalibration()
