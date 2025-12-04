@@ -16,6 +16,8 @@ public class Container : MonoBehaviour {
     public float edgeSize; //Size of edge of renderzone. Prevents cut off meshes.
     public float boxOffsetCompentsater;
     List<GameObject> metaBalls = new List<GameObject>();
+    Vector3 cornerPosition;
+    Mesh mesh;
 
     [Header("Gab-fill smoothing")]
     public float gabSmoothDistance = 0.2f;
@@ -41,7 +43,6 @@ public class Container : MonoBehaviour {
     public void Start() {
         boxOffsetCompentsater = transform.localScale.x / 4f;
         this.grid = new CubeGrid(this, this.computeShader);
-        Render();
     }
     
 
@@ -49,42 +50,50 @@ public class Container : MonoBehaviour {
 
         drawClock += Time.deltaTime;
     }
-    public void InstantiateMetaBalls(Vector3[] globalPositions, int arrayLength, Vector3 lowestPosition) 
+    public void AddMetaBall(Vector3 globalPosition, Vector3 lowestPosition) 
     {
-           
-        transform.position = new Vector3( 
-        lowestPosition.x + transform.localScale.x / 2 - edgeSize, 
-        lowestPosition.y + transform.localScale.y / 2 - edgeSize, 
-        lowestPosition.z + transform.localScale.z / 2 - edgeSize);
-
-        for (int i = 0; i < arrayLength; i++)
+        if (cornerPosition != lowestPosition)
         {
-            //Smoothing out between gaps;
-            if (i > 0 && gabSmoothIterations > 0)
+            foreach (GameObject mb in metaBalls)
             {
-                float gapBetweenBalls = (globalPositions[i] - globalPositions[i - 1]).magnitude;
-                for (int j = gabSmoothIterations; j > 0; j--) 
-                {
-
-                    if (gapBetweenBalls > gabSmoothDistance*j) //Starts with biggest distance
-                    {
-                        int fillOutBallsCount = j;
-                        for (int k = fillOutBallsCount; k > 0; k--)
-                        {
-                            float lerpValue = (float)(k / (fillOutBallsCount + 1));
-                            Vector3 position = Vector3.Lerp(globalPositions[i] ,globalPositions[i - 1], lerpValue);
-                            InstantiateBall(position);
-                        }
-                        break;
-                    }
-                }
-
+                mb.transform.position += cornerPosition- lowestPosition;
             }
-            InstantiateBall(globalPositions[i]);
-        }
-        StartCoroutine(Render());
 
+            transform.position = new Vector3(
+            lowestPosition.x + transform.localScale.x / 2 - edgeSize,
+            lowestPosition.y + transform.localScale.y / 2 - edgeSize,
+            lowestPosition.z + transform.localScale.z / 2 - edgeSize);
+            cornerPosition = lowestPosition;
+           
+        }
+        int metaBallCount = metaBalls.Count();
+      
+        //Smoothing out between gaps;
+        if (gabSmoothIterations > 0 && metaBallCount > 1)
+        {
+            float gapBetweenBalls = (metaBalls[metaBallCount - 1].transform.position - metaBalls[metaBallCount - 2].transform.position).magnitude; //Distance between this ball and ball before
+            for (int j = gabSmoothIterations; j > 0; j--)
+            {
+
+                if (gapBetweenBalls > gabSmoothDistance * j) //Starts with biggest distance
+                {
+                    int fillOutBallsCount = j;
+                    for (int k = fillOutBallsCount; k > 0; k--)
+                    {
+                        float lerpValue = (float)(k / (fillOutBallsCount + 1));
+                        Vector3 position = Vector3.Lerp(metaBalls[metaBallCount - 1].transform.position, metaBalls[metaBallCount - 2].transform.position, lerpValue);
+                        InstantiateBall(position);
+                    }
+                    break;
+                }
+            }
+
+        }
+        InstantiateBall(globalPosition);
+
+        StartCoroutine(Render());
     }
+    
     void InstantiateBall (Vector3 InstPosition) 
     {
         GameObject newMetaBall = Instantiate(metaBallPrefab, this.transform);
@@ -92,23 +101,38 @@ public class Container : MonoBehaviour {
         newMetaBall.transform.localScale = new Vector3(.06f, .06f, .06f);
         metaBalls.Add(newMetaBall);
     }
-    void ClearMetaBalls()
+    public void ClearMetaBalls()
     {
+        GameObject drawZoneNewObj = new GameObject();
+        drawZoneNewObj.transform.localScale = transform.localScale;
+
+        //First set scale then parent!
+        drawZoneNewObj.transform.SetParent(drawZone.transform);
+        Mesh independentMesh = Instantiate(mesh); //Mesh needs to be independent
+        drawZoneNewObj.AddComponent<MeshFilter>().mesh = independentMesh;
+        drawZoneNewObj.AddComponent<MeshRenderer>().material = Instantiate(material);
+        mesh.Clear();
+        drawZoneNewObj.transform.position = transform.position;
+
         foreach (GameObject metaBall in metaBalls)
         {
             Destroy(metaBall);
         }
         metaBalls.Clear();
+
+        drawClock = 0f;
     }
     
     public IEnumerator Render()
     {
         yield return null;
+
+        //Setting drawIntensity:
         material.color = ColourChoosing.drawingColour;
         float timePerPos = drawClock / metaBalls.Count;
         float timeToIntensityFactor = (timePerPosMax - timePerPosMin);
         float drawIntensity = 1 - (timePerPos - timePerPosMin) / timeToIntensityFactor;
-        //Debug.Log(timePerPos);
+        
         if (drawIntensity < 0)
         {
             drawIntensity = 0;
@@ -121,29 +145,12 @@ public class Container : MonoBehaviour {
        
 
         this.grid.evaluateAll(this.GetComponentsInChildren<MetaBall>());
-        Mesh mesh = this.GetComponent<MeshFilter>().mesh;
+        mesh = this.GetComponent<MeshFilter>().mesh;
         mesh.Clear();
         mesh.vertices = this.grid.vertices.ToArray();
         mesh.triangles = this.grid.getTriangles();
 
         RecalculateSmoothNormals(mesh);
-       
-
-        GameObject drawZoneNewObj = new GameObject();
-        drawZoneNewObj.transform.localScale = transform.localScale;
-
-        //First set scale then parent!
-        drawZoneNewObj.transform.SetParent(drawZone.transform);
-        Mesh independentMesh = Instantiate(mesh); //Mesh needs to be independent
-        drawZoneNewObj.AddComponent<MeshFilter>().mesh = independentMesh;
-        drawZoneNewObj.AddComponent<MeshRenderer>().material = Instantiate(material);
-        
-        drawZoneNewObj.transform.position = transform.position;
-        mesh.Clear();
-
-        ClearMetaBalls();
-        drawClock = 0f;
-
     }
   
     public static void RecalculateSmoothNormals(Mesh mesh, float mergeEpsilon = 0.000001f, float smoothingAngle = 180f)
