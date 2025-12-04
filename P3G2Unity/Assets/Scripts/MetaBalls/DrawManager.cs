@@ -21,7 +21,8 @@ public class DrawManager : MonoBehaviour
     public int metaBallMaxCount = 50;
     public Vector3[] metaBallPositions;
     int metaBallArrayPosition;
-
+    public int keepingBallsCount = 5;
+ 
     //For CheckInDrawZone();
     Vector3 lowestPosition;
     Vector3 highestPosition;
@@ -69,7 +70,7 @@ public class DrawManager : MonoBehaviour
         framesWithoutDraw = 0;
 
 
-        if (!CheckInDrawZone(position))
+        if (!CheckInDrawZone(position, metaBallArrayPosition))
         {
             Debug.Log("Out of drawzone");
             InstantiateDrawing(false);
@@ -79,9 +80,8 @@ public class DrawManager : MonoBehaviour
             Debug.Log("MetaballPositons full");
             InstantiateDrawing(false);
         }
-        if (metaBallArrayPosition== 0)
+        if (metaBallArrayPosition == 0)
         {
-
             lowestPosition = position;
             highestPosition = position;
         }
@@ -92,32 +92,28 @@ public class DrawManager : MonoBehaviour
     
     void InstantiateDrawing (bool instantiateAsEndedDrawing)
     {
-        container.InstantiateMetaBalls(metaBallPositions, metaBallArrayPosition, lowestPosition);
+        container.ClearMetaBalls();
         if (instantiateAsEndedDrawing)
         {
             metaBallArrayPosition = 0;
         }
         else
         {
-            int keepingBallsCount = 5;
             for (int i = 0; i < keepingBallsCount; i++)
             {
+                CheckInDrawZone(metaBallPositions[i], i);
+
                 metaBallPositions[i] = metaBallPositions[metaBallArrayPosition + i - keepingBallsCount];
+                container.AddMetaBall(metaBallPositions[i], lowestPosition);
             }
             metaBallArrayPosition = keepingBallsCount;
-            lowestPosition = metaBallPositions[0];
-            highestPosition = metaBallPositions[0];
-            for (int i = 1; i < keepingBallsCount; i++)
-            {
-                CheckInDrawZone(metaBallPositions[i]);
-            }
-
+            
         }
     }
     
-    bool CheckInDrawZone (Vector3 newPosition)
+    bool CheckInDrawZone (Vector3 newPosition, int arrayPosition)
     {
-        if (metaBallArrayPosition == 0)
+        if (arrayPosition == 0)
         {
             lowestPosition = newPosition;
             highestPosition = newPosition;
@@ -172,10 +168,12 @@ public class DrawManager : MonoBehaviour
     {
         if (metaBallArrayPosition > 0)
         {
+            //Preventing metaballs being to close to each other;
             if ((position - metaBallPositions[metaBallArrayPosition - 1]).magnitude > ballDensity)
             {
                 metaBallPositions[metaBallArrayPosition] = position;
                 metaBallArrayPosition++;
+                container.AddMetaBall(position, lowestPosition);
             }
             else return;
         } 
@@ -183,6 +181,7 @@ public class DrawManager : MonoBehaviour
         {
             metaBallPositions[metaBallArrayPosition] = position;
             metaBallArrayPosition++;
+            container.AddMetaBall(position, lowestPosition);
         }
     }
 
