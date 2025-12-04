@@ -200,7 +200,7 @@ Camera:
   m_Depth: 10
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 32
+    m_Bits: 160
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -270,6 +270,8 @@ GameObject:
   - component: {fileID: 1791266043627649611}
   - component: {fileID: 5037742607661903370}
   - component: {fileID: 2432977410249567489}
+  - component: {fileID: 4962626692943140032}
+  - component: {fileID: 7833524023799643685}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -285,7 +287,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8040543406005642076}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.000000104308114}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 3.2, z: 15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -303,7 +305,7 @@ Camera:
   m_GameObject: {fileID: 8040543406005642076}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
+  m_ClearFlags: 1
   m_BackGroundColor: {r: 0.6392157, g: 0.6627451, b: 0.7058824, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -423,3 +425,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3a431c729dad074aadbc8e28bb624b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4962626692943140032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8040543406005642076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b7e9495491183c48b01804321fe8956, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drawingHand: 0
+  leftHandPositionInvertedYZ: {x: 0, y: 0, z: 0}
+  leftShoulderPositionInvertedY: {x: 0, y: 0, z: 0}
+  rightHandPositionInvertedYZ: {x: 0, y: 0, z: 0}
+  rightShoulderPositionInvertedY: {x: 0, y: 0, z: 0}
+  mainHand: {fileID: 0}
+  sensitivity: 5
+  graphicRaycaster: {fileID: 0}
+--- !u!114 &7833524023799643685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8040543406005642076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10

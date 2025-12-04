@@ -38,7 +38,7 @@ public class ColourChoosing : MonoBehaviour
         colourMenu = transform.GetChild(0).gameObject;
         doneMenu = transform.GetChild(1).gameObject;
         mainCameraTransform = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Transform>();
-        if (!handController.drawingHand)
+        if (!MenuController.menuControllerInstance.drawingHand)
         {
             colourMenu.transform.localPosition = new Vector3(2, 0, 0);
             doneMenu.transform.localPosition = new Vector3(2, 0, 0);

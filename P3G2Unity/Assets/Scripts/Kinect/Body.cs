@@ -60,11 +60,16 @@ public struct Body : ISerializable
             // K4ABT joint position unit is in millimeter. We need to convert to meters before we use the values.
             JointPositions3D[bodyPoint] = body.Skeleton.GetJoint(bodyPoint).Position / 1000.0f;
             // WE ADDED THIS
-            Test.leftHandPosition = new UnityEngine.Vector3(body.Skeleton.GetJoint(8).Position.X / 1000.0f, body.Skeleton.GetJoint(8).Position.Y / 1000.0f, body.Skeleton.GetJoint(8).Position.Z / 1000.0f);
+            /*Test.leftHandPosition = new UnityEngine.Vector3(body.Skeleton.GetJoint(8).Position.X / 1000.0f, body.Skeleton.GetJoint(8).Position.Y / 1000.0f, body.Skeleton.GetJoint(8).Position.Z / 1000.0f);
             Test.leftShoulderPosition = new UnityEngine.Vector3(body.Skeleton.GetJoint(5).Position.X / 1000.0f, body.Skeleton.GetJoint(5).Position.Y / 1000.0f, body.Skeleton.GetJoint(5).Position.Z / 1000.0f);
             Test.rightHandPosition = new UnityEngine.Vector3(body.Skeleton.GetJoint(15).Position.X / 1000.0f, body.Skeleton.GetJoint(15).Position.Y / 1000.0f, body.Skeleton.GetJoint(15).Position.Z / 1000.0f);
             Test.rightShoulderPosition = new UnityEngine.Vector3(body.Skeleton.GetJoint(12).Position.X / 1000.0f, body.Skeleton.GetJoint(12).Position.Y / 1000.0f, body.Skeleton.GetJoint(12).Position.Z / 1000.0f);
-            Test.chestPosition = new UnityEngine.Vector3(body.Skeleton.GetJoint(2).Position.X / 1000.0f, body.Skeleton.GetJoint(2).Position.Y / 1000.0f, body.Skeleton.GetJoint(2).Position.Z / 1000.0f);
+            Test.chestPosition = new UnityEngine.Vector3(body.Skeleton.GetJoint(2).Position.X / 1000.0f, body.Skeleton.GetJoint(2).Position.Y / 1000.0f, body.Skeleton.GetJoint(2).Position.Z / 1000.0f);*/
+            MenuController.leftHandPosition = new UnityEngine.Vector3(body.Skeleton.GetJoint(8).Position.X / 1000.0f, body.Skeleton.GetJoint(8).Position.Y / 1000.0f, body.Skeleton.GetJoint(8).Position.Z / 1000.0f);
+            MenuController.leftShoulderPosition = new UnityEngine.Vector3(body.Skeleton.GetJoint(5).Position.X / 1000.0f, body.Skeleton.GetJoint(5).Position.Y / 1000.0f, body.Skeleton.GetJoint(5).Position.Z / 1000.0f);
+            MenuController.rightHandPosition = new UnityEngine.Vector3(body.Skeleton.GetJoint(15).Position.X / 1000.0f, body.Skeleton.GetJoint(15).Position.Y / 1000.0f, body.Skeleton.GetJoint(15).Position.Z / 1000.0f);
+            MenuController.rightShoulderPosition = new UnityEngine.Vector3(body.Skeleton.GetJoint(12).Position.X / 1000.0f, body.Skeleton.GetJoint(12).Position.Y / 1000.0f, body.Skeleton.GetJoint(12).Position.Z / 1000.0f);
+            MenuController.chestPosition = new UnityEngine.Vector3(body.Skeleton.GetJoint(2).Position.X / 1000.0f, body.Skeleton.GetJoint(2).Position.Y / 1000.0f, body.Skeleton.GetJoint(2).Position.Z / 1000.0f);
             // ^^
             JointRotations[bodyPoint] = body.Skeleton.GetJoint(bodyPoint).Quaternion;
             JointPrecisions[bodyPoint] = body.Skeleton.GetJoint(bodyPoint).ConfidenceLevel;
