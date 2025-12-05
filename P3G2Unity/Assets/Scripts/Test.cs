@@ -14,6 +14,7 @@ public class Test : MonoBehaviour
     public static GameObject meshContainer;
 
     public static float calibrateZCompensator = -18f;
+    static float calibrationSensitivity = 1.8f;
 
 
 
@@ -150,7 +151,7 @@ public class Test : MonoBehaviour
     {
         chestPositionInvertedYZ = new Vector3(MenuController.chestPosition.x, MenuController.chestPosition.y * -1, MenuController.chestPosition.z * -1);
 
-        meshContainer.transform.position = new Vector3(chestPositionInvertedYZ.x, chestPositionInvertedYZ.y, (chestPositionInvertedYZ.z + calibrateZCompensator));
+        meshContainer.transform.position = new Vector3(chestPositionInvertedYZ.x, chestPositionInvertedYZ.y, (chestPositionInvertedYZ.z * calibrationSensitivity + calibrateZCompensator));
     }
 
     IEnumerator InitialCalibration()

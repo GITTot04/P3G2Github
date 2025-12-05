@@ -52,10 +52,10 @@ public class MenuController : MonoBehaviour
 
     private void Update()
     {
-        leftHandPositionInvertedYZ = new Vector3(leftHandPosition.x * sensitivity, leftHandPosition.y * -1 * sensitivity, leftHandPosition.z * -1);
-        leftShoulderPositionInvertedY = new Vector3(leftShoulderPosition.x * sensitivity, leftShoulderPosition.y * -1 * sensitivity, leftShoulderPosition.z);
-        rightHandPositionInvertedYZ = new Vector3(rightHandPosition.x * sensitivity, rightHandPosition.y * -1 * sensitivity, rightHandPosition.z * -1);
-        rightShoulderPositionInvertedY = new Vector3(rightShoulderPosition.x * sensitivity, rightShoulderPosition.y * -1 * sensitivity, rightShoulderPosition.z);
+        leftHandPositionInvertedYZ = new Vector3(leftHandPosition.x * sensitivity, leftHandPosition.y * -1 * sensitivity, leftHandPosition.z * -1 + sensitivity);
+        leftShoulderPositionInvertedY = new Vector3(leftShoulderPosition.x * sensitivity, leftShoulderPosition.y * -1 * sensitivity, leftShoulderPosition.z * sensitivity);
+        rightHandPositionInvertedYZ = new Vector3(rightHandPosition.x * sensitivity, rightHandPosition.y * -1 * sensitivity, rightHandPosition.z * -1 * sensitivity);
+        rightShoulderPositionInvertedY = new Vector3(rightShoulderPosition.x * sensitivity, rightShoulderPosition.y * -1 * sensitivity, rightShoulderPosition.z * sensitivity);
 
         if (SceneManager.GetActiveScene().buildIndex != 6) // Do not run this on the drawing scene
         {
