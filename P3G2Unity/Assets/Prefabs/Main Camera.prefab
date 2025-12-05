@@ -107,7 +107,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 1
+  m_RenderPostProcessing: 0
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -235,7 +235,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 1
+  m_RenderPostProcessing: 0
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -445,6 +445,7 @@ MonoBehaviour:
   mainHand: {fileID: 0}
   sensitivity: 5
   graphicRaycaster: {fileID: 0}
+  UICamera: {fileID: 0}
 --- !u!114 &7833524023799643685
 MonoBehaviour:
   m_ObjectHideFlags: 0

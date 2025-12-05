@@ -175,7 +175,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -837,7 +837,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
@@ -7710,7 +7710,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resetCircle: {fileID: 2111984495}
-  resetCircle1: {fileID: 1376931949}
+  returnToDrawingCircle: {fileID: 0}
   calibrateCircle: {fileID: 1773886758}
   doneCircle: {fileID: 306826934}
   doneCircle1: {fileID: 266531031}
@@ -9188,11 +9188,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   drawingHandTracker: {fileID: 1227502002}
   nonDrawingHandTracker: {fileID: 927094724}
-  curser: {fileID: 1414898383}
+  cursor: {fileID: 0}
   drawingSphere: {fileID: 1450242469069308458, guid: b05d026c372ffd34c9a79e77a2f3ea70, type: 3}
-  drawingHand: 1
   doneDrawing: 0
-  sensitivity: 1.8
   mouseDraw: 0
   drawManager: {fileID: 1323331396}
 --- !u!4 &1599694850
