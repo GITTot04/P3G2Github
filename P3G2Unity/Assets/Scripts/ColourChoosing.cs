@@ -1,14 +1,16 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class ColourChoosing : MonoBehaviour
 {
     GameObject colourMenu;
     GameObject doneMenu;
     public GameObject resetCircle;
-    public GameObject resetCircle1;
+    public GameObject returnToDrawingCircle;
     float resetFillAmount;
+    float returnToDrawingFillAmount;
     public GameObject calibrateCircle;
     float calibrateFillAmount;
     public GameObject doneCircle;
@@ -20,6 +22,8 @@ public class ColourChoosing : MonoBehaviour
     float calibrateHeldTime;
     float timeToDone = 5f;
     float doneHeldTime;
+    float timeToReturnToDrawing = 5f;
+    float returnToDrawingHeldTime;
     public Test handController;
     public Color drawingColour = Color.gray;
     public Transform mainCameraTransform;
@@ -33,7 +37,8 @@ public class ColourChoosing : MonoBehaviour
     {
         colourMenu = transform.GetChild(0).gameObject;
         doneMenu = transform.GetChild(1).gameObject;
-        if (!handController.drawingHand)
+        mainCameraTransform = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Transform>();
+        if (!MenuController.menuControllerInstance.drawingHand)
         {
             colourMenu.transform.localPosition = new Vector3(2, 0, 0);
             doneMenu.transform.localPosition = new Vector3(2, 0, 0);
@@ -96,14 +101,7 @@ public class ColourChoosing : MonoBehaviour
                     case "Reset":
                         resetHeldTime += Time.deltaTime;
                         resetFillAmount = resetHeldTime / timeToReset;
-                        if (!handController.doneDrawing)
-                        {
-                            resetCircle.GetComponent<Image>().fillAmount = resetFillAmount;
-                        }
-                        else
-                        {
-                            resetCircle1.GetComponent<Image>().fillAmount = resetFillAmount;
-                        }
+                        resetCircle.GetComponent<Image>().fillAmount = resetFillAmount;
                         if (resetFillAmount >= 1)
                         {
                             ResetDrawing();
@@ -124,9 +122,11 @@ public class ColourChoosing : MonoBehaviour
                         break;
                     case "Turn Left":
                         allDrawnBallsContainer.transform.RotateAround(allDrawnBallsContainer.transform.position, new Vector3(0, 1, 0), rotationSpeed);
+                        ResetFillAmounts();
                         break;
                     case "Turn Right":
-                        allDrawnBallsContainer.transform.RotateAround(allDrawnBallsContainer.transform.position, new Vector3(0, 1, 0), rotationSpeed);
+                        allDrawnBallsContainer.transform.RotateAround(allDrawnBallsContainer.transform.position, new Vector3(0, -1, 0), rotationSpeed);
+                        ResetFillAmounts();
                         break;
                     case "Done":
                         doneHeldTime += Time.deltaTime;
@@ -147,9 +147,21 @@ public class ColourChoosing : MonoBehaviour
                         }
                         else if (doneFillAmount >= 1)
                         {
-                            // Set scene to main menu
+                            SceneManager.LoadScene(0);
                         }
                         ResetFillAmounts("done");
+                        break;
+                    case "Return To Drawing":
+                        returnToDrawingHeldTime += Time.deltaTime;
+                        returnToDrawingFillAmount = returnToDrawingHeldTime / timeToReturnToDrawing;
+                        returnToDrawingCircle.GetComponent<Image>().fillAmount = returnToDrawingFillAmount;
+                        if (returnToDrawingFillAmount >= 1)
+                        {
+                            returnToDrawingHeldTime = 0f;
+                            returnToDrawingFillAmount = 0f;
+                            handController.doneDrawing = false;
+                        }
+                        ResetFillAmounts("return to drawing");
                         break;
                     default:
                         break;
@@ -175,25 +187,20 @@ public class ColourChoosing : MonoBehaviour
     void ResetFillAmounts()
     {
         resetHeldTime = 0;
-        if (!handController.doneDrawing)
-        {
-            resetCircle.GetComponent<Image>().fillAmount = resetFillAmount;
-        }
-        else
-        {
-            resetCircle1.GetComponent<Image>().fillAmount = resetFillAmount;
-        }
+        resetCircle.GetComponent<Image>().fillAmount = 0;
         calibrateHeldTime = 0;
         calibrateCircle.GetComponent<Image>().fillAmount = 0;
         doneHeldTime = 0;
         if (!handController.doneDrawing)
         {
-            doneCircle.GetComponent<Image>().fillAmount = doneFillAmount;
+            doneCircle.GetComponent<Image>().fillAmount = 0;
         }
         else
         {
-            doneCircle1.GetComponent<Image>().fillAmount = doneFillAmount;
+            doneCircle1.GetComponent<Image>().fillAmount = 0;
         }
+        returnToDrawingHeldTime = 0;
+        returnToDrawingCircle.GetComponent<Image>().fillAmount = 0;
     }
     void ResetFillAmounts(string exception)
     {
@@ -205,45 +212,52 @@ public class ColourChoosing : MonoBehaviour
                 doneHeldTime = 0;
                 if (!handController.doneDrawing)
                 {
-                    doneCircle.GetComponent<Image>().fillAmount = doneFillAmount;
+                    doneCircle.GetComponent<Image>().fillAmount = 0;
                 }
                 else
                 {
-                    doneCircle1.GetComponent<Image>().fillAmount = doneFillAmount;
+                    doneCircle1.GetComponent<Image>().fillAmount = 0;
                 }
+                returnToDrawingHeldTime = 0;
+                returnToDrawingCircle.GetComponent<Image>().fillAmount = 0;
                 break;
             case "calibrate":
                 resetHeldTime = 0;
-                if (!handController.doneDrawing)
-                {
-                    resetCircle.GetComponent<Image>().fillAmount = resetFillAmount;
-                }
-                else
-                {
-                    resetCircle1.GetComponent<Image>().fillAmount = resetFillAmount;
-                }
+                resetCircle.GetComponent<Image>().fillAmount = 0;
                 doneHeldTime = 0;
                 if (!handController.doneDrawing)
                 {
-                    doneCircle.GetComponent<Image>().fillAmount = doneFillAmount;
+                    doneCircle.GetComponent<Image>().fillAmount = 0;
                 }
                 else
                 {
-                    doneCircle1.GetComponent<Image>().fillAmount = doneFillAmount;
+                    doneCircle1.GetComponent<Image>().fillAmount = 0;
                 }
+                returnToDrawingHeldTime = 0;
+                returnToDrawingCircle.GetComponent<Image>().fillAmount = 0;
                 break;
             case "done":
                 resetHeldTime = 0;
+                resetCircle.GetComponent<Image>().fillAmount = 0;
+                calibrateHeldTime = 0;
+                calibrateCircle.GetComponent<Image>().fillAmount = 0;
+                returnToDrawingHeldTime = 0;
+                returnToDrawingCircle.GetComponent<Image>().fillAmount = 0;
+                break;
+            case "return to drawing":
+                resetHeldTime = 0;
+                resetCircle.GetComponent<Image>().fillAmount = 0;
+                calibrateHeldTime = 0;
+                calibrateCircle.GetComponent<Image>().fillAmount = 0;
+                doneHeldTime = 0;
                 if (!handController.doneDrawing)
                 {
-                    resetCircle.GetComponent<Image>().fillAmount = resetFillAmount;
+                    doneCircle.GetComponent<Image>().fillAmount = 0;
                 }
                 else
                 {
-                    resetCircle1.GetComponent<Image>().fillAmount = resetFillAmount;
+                    doneCircle1.GetComponent<Image>().fillAmount = 0;
                 }
-                calibrateHeldTime = 0;
-                calibrateCircle.GetComponent<Image>().fillAmount = 0;
                 break;
             default:
                 break;
