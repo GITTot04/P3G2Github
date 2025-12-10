@@ -16,13 +16,13 @@ public class ColourChoosing : MonoBehaviour
     public GameObject doneCircle;
     public GameObject doneCircle1;
     float doneFillAmount;
-    float timeToReset = 5f;
+    float timeToReset = 3f;
     float resetHeldTime;
-    float timeToCalibrate = 5f;
+    float timeToCalibrate = 3f;
     float calibrateHeldTime;
-    float timeToDone = 5f;
+    float timeToDone = 3f;
     float doneHeldTime;
-    float timeToReturnToDrawing = 5f;
+    float timeToReturnToDrawing = 3f;
     float returnToDrawingHeldTime;
     public Test handController;
     public Color drawingColour = Color.gray;
@@ -147,7 +147,7 @@ public class ColourChoosing : MonoBehaviour
                         }
                         else if (doneFillAmount >= 1)
                         {
-                            SceneManager.LoadScene(0);
+                            SceneManager.LoadScene(1);
                         }
                         ResetFillAmounts("done");
                         break;

@@ -18,7 +18,8 @@ public class MenuController : MonoBehaviour
     public Vector3 rightHandPositionInvertedYZ;
     public Vector3 rightShoulderPositionInvertedY;
     public GameObject mainHand;
-    public int sensitivity = 5;
+    public float sensitivity = 5;
+    public float menuSensitivity = 6;
     public GraphicRaycaster graphicRaycaster;
     PointerEventData pointerEventData;
     EventSystem eventSystem;
@@ -52,10 +53,20 @@ public class MenuController : MonoBehaviour
 
     private void Update()
     {
-        leftHandPositionInvertedYZ = new Vector3(leftHandPosition.x * sensitivity, leftHandPosition.y * -1 * sensitivity, leftHandPosition.z * -1 + sensitivity);
-        leftShoulderPositionInvertedY = new Vector3(leftShoulderPosition.x * sensitivity, leftShoulderPosition.y * -1 * sensitivity, leftShoulderPosition.z * sensitivity);
-        rightHandPositionInvertedYZ = new Vector3(rightHandPosition.x * sensitivity, rightHandPosition.y * -1 * sensitivity, rightHandPosition.z * -1 * sensitivity);
-        rightShoulderPositionInvertedY = new Vector3(rightShoulderPosition.x * sensitivity, rightShoulderPosition.y * -1 * sensitivity, rightShoulderPosition.z * sensitivity);
+        if (SceneManager.GetActiveScene().buildIndex == 6) {
+
+            leftHandPositionInvertedYZ = new Vector3(leftHandPosition.x * sensitivity, leftHandPosition.y * -1 * sensitivity, leftHandPosition.z * -1 + sensitivity);
+            leftShoulderPositionInvertedY = new Vector3(leftShoulderPosition.x * sensitivity, leftShoulderPosition.y * -1 * sensitivity, leftShoulderPosition.z * sensitivity);
+            rightHandPositionInvertedYZ = new Vector3(rightHandPosition.x * sensitivity, rightHandPosition.y * -1 * sensitivity, rightHandPosition.z * -1 * sensitivity);
+            rightShoulderPositionInvertedY = new Vector3(rightShoulderPosition.x * sensitivity, rightShoulderPosition.y * -1 * sensitivity, rightShoulderPosition.z * sensitivity);
+        }
+        else
+        {
+            leftHandPositionInvertedYZ = new Vector3(leftHandPosition.x * menuSensitivity, leftHandPosition.y * -1 * menuSensitivity, leftHandPosition.z * -1 + menuSensitivity);
+            leftShoulderPositionInvertedY = new Vector3(leftShoulderPosition.x * menuSensitivity, leftShoulderPosition.y * -1 * menuSensitivity, leftShoulderPosition.z * menuSensitivity);
+            rightHandPositionInvertedYZ = new Vector3(rightHandPosition.x * menuSensitivity, rightHandPosition.y * -1 * menuSensitivity, rightHandPosition.z * -1 * menuSensitivity);
+            rightShoulderPositionInvertedY = new Vector3(rightShoulderPosition.x * menuSensitivity, rightShoulderPosition.y * -1 * menuSensitivity, rightShoulderPosition.z * menuSensitivity);
+        }
 
         if (SceneManager.GetActiveScene().buildIndex != 6) // Do not run this on the drawing scene
         {
@@ -94,7 +105,6 @@ public class MenuController : MonoBehaviour
                     }
                     else
                     {
-                        Debug.Log(lastHitGameObject.name + ":" + result.gameObject.name);
                         button.ResetValues();
                         lastHitGameObject = result.gameObject;
                         button = lastHitGameObject.GetComponent<InteractableButton>();

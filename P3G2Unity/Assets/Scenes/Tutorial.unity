@@ -247,7 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab73dcc367d542647a4c70b1f6a57450, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToComplete: 5
+  timeToComplete: 3
   HeldTime: 0
   fillAmount: 0
   progressCircle: {fileID: 1187704176}
@@ -343,7 +343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d1527b139fc748439aab0eea175e4aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToComplete: 5
+  timeToComplete: 3
   HeldTime: 0
   fillAmount: 0
   progressCircle: {fileID: 2057605045}
@@ -1388,7 +1388,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d1527b139fc748439aab0eea175e4aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToComplete: 5
+  timeToComplete: 3
   HeldTime: 0
   fillAmount: 0
   progressCircle: {fileID: 1596137571}
@@ -2365,7 +2365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab73dcc367d542647a4c70b1f6a57450, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToComplete: 5
+  timeToComplete: 3
   HeldTime: 0
   fillAmount: 0
   progressCircle: {fileID: 1061961805}

@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public abstract class InteractableButton : MonoBehaviour
 {
-    public float timeToComplete = 5f;
+    public float timeToComplete = 3f;
     public float HeldTime;
     public float fillAmount;
     public Image progressCircle;

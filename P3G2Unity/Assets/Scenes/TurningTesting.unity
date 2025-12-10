@@ -518,6 +518,7 @@ GameObject:
   - component: {fileID: 330585544}
   - component: {fileID: 330585547}
   - component: {fileID: 330585548}
+  - component: {fileID: 330585550}
   - component: {fileID: 330585549}
   m_Layer: 0
   m_Name: Main Camera
@@ -525,7 +526,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &330585544
 AudioListener:
   m_ObjectHideFlags: 0
@@ -672,6 +673,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3a431c729dad074aadbc8e28bb624b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &330585550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330585543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b7e9495491183c48b01804321fe8956, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drawingHand: 0
+  leftHandPositionInvertedYZ: {x: 0, y: 0, z: 0}
+  leftShoulderPositionInvertedY: {x: 0, y: 0, z: 0}
+  rightHandPositionInvertedYZ: {x: 0, y: 0, z: 0}
+  rightShoulderPositionInvertedY: {x: 0, y: 0, z: 0}
+  mainHand: {fileID: 0}
+  sensitivity: 1.8
+  menuSensitivity: 6
+  graphicRaycaster: {fileID: 0}
+  UICamera: {fileID: 0}
 --- !u!1 &347186980
 GameObject:
   m_ObjectHideFlags: 0
@@ -7710,7 +7733,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resetCircle: {fileID: 2111984495}
-  returnToDrawingCircle: {fileID: 0}
+  returnToDrawingCircle: {fileID: 1376931949}
   calibrateCircle: {fileID: 1773886758}
   doneCircle: {fileID: 306826934}
   doneCircle1: {fileID: 266531031}
@@ -8343,7 +8366,7 @@ GameObject:
   - component: {fileID: 1369054089}
   - component: {fileID: 1369054088}
   m_Layer: 5
-  m_Name: Reset
+  m_Name: Return To Drawing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8997,13 +9020,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1514628181}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1369054087}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -9029,7 +9052,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -531114643, guid: d0b0c178026f21e449259412ecf95415, type: 3}
+  m_Sprite: {fileID: 1590288355, guid: d0b0c178026f21e449259412ecf95415, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -9188,7 +9211,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   drawingHandTracker: {fileID: 1227502002}
   nonDrawingHandTracker: {fileID: 927094724}
-  cursor: {fileID: 0}
+  cursor: {fileID: 1414898383}
   drawingSphere: {fileID: 1450242469069308458, guid: b05d026c372ffd34c9a79e77a2f3ea70, type: 3}
   doneDrawing: 0
   mouseDraw: 0
