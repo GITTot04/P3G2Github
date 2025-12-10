@@ -10,7 +10,7 @@ public class ColourChoosing : MonoBehaviour
     float resetFillAmount;
     float timeToReset = 5f;
     float resetHeldTime;
-    public Test handController;
+    public HandController handController;
     public Color drawingColour = Color.gray;
     public Transform mainCameraTransform;
     public LayerMask layerMaskUI;

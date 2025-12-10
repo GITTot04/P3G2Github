@@ -1,5 +1,5 @@
 using UnityEngine;
-public class Test : MonoBehaviour
+public class HandController : MonoBehaviour
 {
     public static Vector3 leftHandPosition;
     public static Vector3 leftShoulderPosition;
@@ -13,7 +13,6 @@ public class Test : MonoBehaviour
     public GameObject nonDrawingHandTracker;
     public GameObject curser;
     ParticleSystem followingParticles;
-    Vector3[] spherePositions = new Vector3[40];
     int stashedSpherePositions;
     public GameObject drawingSphere;
     public bool drawingHand; // 0 = left, 1 = right
