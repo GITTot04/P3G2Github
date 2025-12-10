@@ -6,7 +6,7 @@ public class MyMetaBall : MetaBall
 {
     public override void Start()
     {
-        factor = factor;
+        //Only purpose of this script is to override Start of parent.
     }
   
 
