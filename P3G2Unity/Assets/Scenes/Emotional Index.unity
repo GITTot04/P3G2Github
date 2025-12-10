@@ -869,7 +869,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b15a5b369f692348a1a8f17e986b663, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToComplete: 5
+  timeToComplete: 3
   HeldTime: 0
   fillAmount: 0
   progressCircle: {fileID: 934307499}
@@ -1902,7 +1902,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b15a5b369f692348a1a8f17e986b663, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToComplete: 5
+  timeToComplete: 3
   HeldTime: 0
   fillAmount: 0
   progressCircle: {fileID: 446417986}
@@ -2844,7 +2844,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b15a5b369f692348a1a8f17e986b663, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToComplete: 5
+  timeToComplete: 3
   HeldTime: 0
   fillAmount: 0
   progressCircle: {fileID: 1819625868}
@@ -2940,7 +2940,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b15a5b369f692348a1a8f17e986b663, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToComplete: 5
+  timeToComplete: 3
   HeldTime: 0
   fillAmount: 0
   progressCircle: {fileID: 564938868}
@@ -3285,7 +3285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b15a5b369f692348a1a8f17e986b663, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToComplete: 5
+  timeToComplete: 3
   HeldTime: 0
   fillAmount: 0
   progressCircle: {fileID: 488583726}
@@ -3343,7 +3343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b15a5b369f692348a1a8f17e986b663, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToComplete: 5
+  timeToComplete: 3
   HeldTime: 0
   fillAmount: 0
   progressCircle: {fileID: 916248186}
@@ -3439,7 +3439,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b15a5b369f692348a1a8f17e986b663, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToComplete: 5
+  timeToComplete: 3
   HeldTime: 0
   fillAmount: 0
   progressCircle: {fileID: 168837279}
@@ -3794,7 +3794,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b15a5b369f692348a1a8f17e986b663, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToComplete: 5
+  timeToComplete: 3
   HeldTime: 0
   fillAmount: 0
   progressCircle: {fileID: 244105590}
@@ -4146,7 +4146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b15a5b369f692348a1a8f17e986b663, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToComplete: 5
+  timeToComplete: 3
   HeldTime: 0
   fillAmount: 0
   progressCircle: {fileID: 1184167810}
@@ -4453,7 +4453,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b15a5b369f692348a1a8f17e986b663, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToComplete: 5
+  timeToComplete: 3
   HeldTime: 0
   fillAmount: 0
   progressCircle: {fileID: 2038718522}
@@ -5256,7 +5256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab73dcc367d542647a4c70b1f6a57450, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToComplete: 5
+  timeToComplete: 3
   HeldTime: 0
   fillAmount: 0
   progressCircle: {fileID: 1645835589}
@@ -5687,7 +5687,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b15a5b369f692348a1a8f17e986b663, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToComplete: 5
+  timeToComplete: 3
   HeldTime: 0
   fillAmount: 0
   progressCircle: {fileID: 28552168}
@@ -6040,7 +6040,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b15a5b369f692348a1a8f17e986b663, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToComplete: 5
+  timeToComplete: 3
   HeldTime: 0
   fillAmount: 0
   progressCircle: {fileID: 1937188441}
@@ -6211,7 +6211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b15a5b369f692348a1a8f17e986b663, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToComplete: 5
+  timeToComplete: 3
   HeldTime: 0
   fillAmount: 0
   progressCircle: {fileID: 1011424504}

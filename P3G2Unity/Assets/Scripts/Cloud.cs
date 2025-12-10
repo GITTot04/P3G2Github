@@ -9,7 +9,7 @@ public class Cloud : MonoBehaviour
     }
     public void UpdateText(bool b)
     {
-        if (b)
+        if (!b)
         {
             GetComponent<TextMeshProUGUI>().text = "Control the cursor with your left hand";
         }

@@ -561,7 +561,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textMesh: {fileID: 285711735}
   nextButton: {fileID: 1608229522}
-  backGroundImage: {fileID: 0}
+  backGroundImage: {fileID: 187787536}
 --- !u!1 &337405817
 GameObject:
   m_ObjectHideFlags: 0
@@ -1253,7 +1253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab73dcc367d542647a4c70b1f6a57450, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToComplete: 5
+  timeToComplete: 3
   HeldTime: 0
   fillAmount: 0
   progressCircle: {fileID: 1100157857}

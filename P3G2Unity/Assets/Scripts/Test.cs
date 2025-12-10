@@ -13,7 +13,7 @@ public class Test : MonoBehaviour
     public bool doneDrawing;
     public static GameObject meshContainer;
 
-    public static float calibrateZCompensator = -18f;
+    public static float calibrateZCompensator = -15f;
     static float calibrationSensitivity = 1.8f;
 
 
