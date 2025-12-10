@@ -13,7 +13,6 @@ public class MouseTracker : MonoBehaviour
         if (plane.Raycast(ray, out float distance))
         {
             worldPos = ray.GetPoint(distance);
-            //Debug.Log("Mouse world position on plane: " + worldPos);
         }
     }
 

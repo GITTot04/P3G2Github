@@ -51,9 +51,6 @@ public class Test : MonoBehaviour
                     nonDrawingHandTracker.transform.position = Vector3.Lerp(nonDrawingHandTracker.transform.position, rightHandPositionInvertedY * 8, 0.1f);
 
                     drawManager.Draw(drawingHandTracker.transform.position);
-                    /*spherePositions[stashedSpherePositions] = drawingHandTracker.transform.position;
-                    stashedSpherePositions++;
-                    */
                 }
                 else if (drawingHand && Mathf.Abs(leftHandPositionInvertedY.y - leftShoulderPositionInvertedY.y) > 0.2)
                 {
@@ -68,9 +65,6 @@ public class Test : MonoBehaviour
                     nonDrawingHandTracker.transform.position = Vector3.Lerp(nonDrawingHandTracker.transform.position, leftHandPositionInvertedY * 8, 0.1f);
 
                     drawManager.Draw(drawingHandTracker.transform.position);
-                    /*spherePositions[stashedSpherePositions] = drawingHandTracker.transform.position;
-                    stashedSpherePositions++;
-                    */
                 }
                 else
                 {
@@ -91,25 +85,15 @@ public class Test : MonoBehaviour
                         drawingHandTracker.transform.position = Vector3.Lerp(drawingHandTracker.transform.position, rightHandPositionInvertedY * 8, 0.1f);
                         nonDrawingHandTracker.transform.position = Vector3.Lerp(nonDrawingHandTracker.transform.position, leftHandPositionInvertedY * 8, 0.1f);
                     }
-                    if (stashedSpherePositions != 0)
-                    {
-                        //drawSpheres();
-                    }
                 }
             }
-            else
-            {
-                //drawSpheres();
-            }
         }
-        else if (mouseDraw)
+        else
         {
-
             if (mouseDown)
             {
                 drawManager.Draw(MouseTracker.worldPos);
             }
-          
         }
     }
     void Update()
@@ -123,14 +107,4 @@ public class Test : MonoBehaviour
             mouseDown = false;
         }
     }
-    /*
-    void drawSpheres()
-    {
-        for (int i = 0; i < stashedSpherePositions; i++)
-        {
-            Instantiate(drawingSphere, spherePositions[i], new Quaternion(0, 0, 0, 0));
-        }
-        stashedSpherePositions = 0;
-    }
-    */
 }
