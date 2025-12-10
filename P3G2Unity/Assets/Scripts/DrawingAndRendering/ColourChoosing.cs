@@ -24,7 +24,7 @@ public class ColourChoosing : MonoBehaviour
     float doneHeldTime;
     float timeToReturnToDrawing = 3f;
     float returnToDrawingHeldTime;
-    public Test handController;
+    public HandController handController;
     public Color drawingColour = Color.gray;
     public Transform mainCameraTransform;
     public LayerMask layerMaskUI;
@@ -116,7 +116,7 @@ public class ColourChoosing : MonoBehaviour
                         {
                             calibrateHeldTime = 0f;
                             calibrateFillAmount = 0f;
-                            Test.Calibrate();
+                            HandController.Calibrate();
                         }
                         ResetFillAmounts("calibrate");
                         break;

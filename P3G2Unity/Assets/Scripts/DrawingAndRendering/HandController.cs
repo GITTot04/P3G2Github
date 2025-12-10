@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-public class Test : MonoBehaviour
+public class HandController : MonoBehaviour
 {
     static Vector3 chestPositionInvertedYZ;
     public GameObject drawingHandTracker;
