@@ -35,55 +35,52 @@ public class HandController : MonoBehaviour
             leftShoulderPositionInvertedY = new Vector3(leftShoulderPosition.x, leftShoulderPosition.y * -1, leftShoulderPosition.z);
             rightHandPositionInvertedY = new Vector3(rightHandPosition.x, rightHandPosition.y * -1, rightHandPosition.z);
             rightShoulderPositionInvertedY = new Vector3(rightShoulderPosition.x, rightShoulderPosition.y * -1, rightShoulderPosition.z);
-            if (stashedSpherePositions < 40)
+            if (!drawingHand && Mathf.Abs(rightHandPositionInvertedY.y - rightShoulderPositionInvertedY.y) > 0.2) // drawing hand: 0 = left, 1 = right
             {
-                if (!drawingHand && Mathf.Abs(rightHandPositionInvertedY.y - rightShoulderPositionInvertedY.y) > 0.2) // 0 = left, 1 = right
+                if (colourMenu.activeSelf)
                 {
-                    if (colourMenu.activeSelf)
-                    {
-                        StopAllCoroutines();
-                        colourMenu.SetActive(false);
-                        curser.SetActive(false);
-                    }
-                    followingParticles.startColor = Color.green;
+                    StopAllCoroutines();
+                    colourMenu.SetActive(false);
+                    curser.SetActive(false);
+                }
+                followingParticles.startColor = Color.green;
+                drawingHandTracker.transform.position = Vector3.Lerp(drawingHandTracker.transform.position, leftHandPositionInvertedY * 8, 0.1f);
+                nonDrawingHandTracker.transform.position = Vector3.Lerp(nonDrawingHandTracker.transform.position, rightHandPositionInvertedY * 8, 0.1f);
+
+                drawManager.Draw(drawingHandTracker.transform.position);
+            }
+            else if (drawingHand && Mathf.Abs(leftHandPositionInvertedY.y - leftShoulderPositionInvertedY.y) > 0.2)
+            {
+                if (colourMenu.activeSelf)
+                {
+                    StopAllCoroutines();
+                    colourMenu.SetActive(false);
+                    curser.SetActive(false);
+                }
+                followingParticles.startColor = Color.green;
+                drawingHandTracker.transform.position = Vector3.Lerp(drawingHandTracker.transform.position, rightHandPositionInvertedY * 8, 0.1f);
+                nonDrawingHandTracker.transform.position = Vector3.Lerp(nonDrawingHandTracker.transform.position, leftHandPositionInvertedY * 8, 0.1f);
+
+                drawManager.Draw(drawingHandTracker.transform.position);
+            }
+            else
+            {
+                followingParticles.startColor = Color.red;
+                if (!colourMenu.activeSelf)
+                {
+                    colourMenu.SetActive(true);
+                    StartCoroutine(nonDrawingHandTracker.GetComponent<ColourChoosing>().PickingColours());
+                    curser.SetActive(true);
+                }
+                if (!drawingHand)
+                {
                     drawingHandTracker.transform.position = Vector3.Lerp(drawingHandTracker.transform.position, leftHandPositionInvertedY * 8, 0.1f);
                     nonDrawingHandTracker.transform.position = Vector3.Lerp(nonDrawingHandTracker.transform.position, rightHandPositionInvertedY * 8, 0.1f);
-
-                    drawManager.Draw(drawingHandTracker.transform.position);
-                }
-                else if (drawingHand && Mathf.Abs(leftHandPositionInvertedY.y - leftShoulderPositionInvertedY.y) > 0.2)
-                {
-                    if (colourMenu.activeSelf)
-                    {
-                        StopAllCoroutines();
-                        colourMenu.SetActive(false);
-                        curser.SetActive(false);
-                    }
-                    followingParticles.startColor = Color.green;
-                    drawingHandTracker.transform.position = Vector3.Lerp(drawingHandTracker.transform.position, rightHandPositionInvertedY * 8, 0.1f);
-                    nonDrawingHandTracker.transform.position = Vector3.Lerp(nonDrawingHandTracker.transform.position, leftHandPositionInvertedY * 8, 0.1f);
-
-                    drawManager.Draw(drawingHandTracker.transform.position);
                 }
                 else
                 {
-                    followingParticles.startColor = Color.red;
-                    if (!colourMenu.activeSelf)
-                    {
-                        colourMenu.SetActive(true);
-                        StartCoroutine(nonDrawingHandTracker.GetComponent<ColourChoosing>().PickingColours());
-                        curser.SetActive(true);
-                    }
-                    if (!drawingHand)
-                    {
-                        drawingHandTracker.transform.position = Vector3.Lerp(drawingHandTracker.transform.position, leftHandPositionInvertedY * 8, 0.1f);
-                        nonDrawingHandTracker.transform.position = Vector3.Lerp(nonDrawingHandTracker.transform.position, rightHandPositionInvertedY * 8, 0.1f);
-                    }
-                    else
-                    {
-                        drawingHandTracker.transform.position = Vector3.Lerp(drawingHandTracker.transform.position, rightHandPositionInvertedY * 8, 0.1f);
-                        nonDrawingHandTracker.transform.position = Vector3.Lerp(nonDrawingHandTracker.transform.position, leftHandPositionInvertedY * 8, 0.1f);
-                    }
+                    drawingHandTracker.transform.position = Vector3.Lerp(drawingHandTracker.transform.position, rightHandPositionInvertedY * 8, 0.1f);
+                    nonDrawingHandTracker.transform.position = Vector3.Lerp(nonDrawingHandTracker.transform.position, leftHandPositionInvertedY * 8, 0.1f);
                 }
             }
         }
