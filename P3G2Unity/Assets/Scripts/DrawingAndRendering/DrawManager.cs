@@ -45,8 +45,7 @@ public class DrawManager : MonoBehaviour
     {
         container = drawContainer.GetComponent<Container>();
     }
-
-
+    
     void FixedUpdate()
     {
         if (isDrawing && framesWithoutDraw > 3)
