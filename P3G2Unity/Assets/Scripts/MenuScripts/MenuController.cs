@@ -53,21 +53,24 @@ public class MenuController : MonoBehaviour
 
     private void Update()
     {
-        if (SceneManager.GetActiveScene().buildIndex == 6) {
-
+        if (SceneManager.GetActiveScene().buildIndex == 6) // Run this on the drawing scene
+        {
             leftHandPositionInvertedYZ = new Vector3(leftHandPosition.x * sensitivity, leftHandPosition.y * -1 * sensitivity, leftHandPosition.z * -1 + sensitivity);
             leftShoulderPositionInvertedY = new Vector3(leftShoulderPosition.x * sensitivity, leftShoulderPosition.y * -1 * sensitivity, leftShoulderPosition.z * sensitivity);
             rightHandPositionInvertedYZ = new Vector3(rightHandPosition.x * sensitivity, rightHandPosition.y * -1 * sensitivity, rightHandPosition.z * -1 * sensitivity);
             rightShoulderPositionInvertedY = new Vector3(rightShoulderPosition.x * sensitivity, rightShoulderPosition.y * -1 * sensitivity, rightShoulderPosition.z * sensitivity);
         }
-        else
+        else // Run this on menu scenes
         {
             leftHandPositionInvertedYZ = new Vector3(leftHandPosition.x * menuSensitivity, leftHandPosition.y * -1 * menuSensitivity, leftHandPosition.z * -1 + menuSensitivity);
             leftShoulderPositionInvertedY = new Vector3(leftShoulderPosition.x * menuSensitivity, leftShoulderPosition.y * -1 * menuSensitivity, leftShoulderPosition.z * menuSensitivity);
             rightHandPositionInvertedYZ = new Vector3(rightHandPosition.x * menuSensitivity, rightHandPosition.y * -1 * menuSensitivity, rightHandPosition.z * -1 * menuSensitivity);
             rightShoulderPositionInvertedY = new Vector3(rightShoulderPosition.x * menuSensitivity, rightShoulderPosition.y * -1 * menuSensitivity, rightShoulderPosition.z * menuSensitivity);
         }
+    }
 
+    private void FixedUpdate()
+    {
         if (SceneManager.GetActiveScene().buildIndex != 6) // Do not run this on the drawing scene
         {
             if (!drawingHand) // 0 = left, 1 = right
@@ -79,10 +82,7 @@ public class MenuController : MonoBehaviour
                 mainHand.transform.position = Vector3.Lerp(mainHand.transform.position, rightHandPositionInvertedYZ * 8, 0.05f);
             }
         }
-    }
 
-    private void FixedUpdate()
-    {
         if (SceneManager.GetActiveScene().buildIndex != 6) // Do not run this on the drawing scene
         {
             screenpos = UICamera.WorldToScreenPoint(mainHand.transform.position);
