@@ -38,7 +38,7 @@ public class ColourChoosing : MonoBehaviour
         colourMenu = transform.GetChild(0).gameObject;
         doneMenu = transform.GetChild(1).gameObject;
         mainCameraTransform = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Transform>();
-        if (!MenuController.menuControllerInstance.drawingHand)
+        if (!MenuController.menuControllerInstance.drawingHand) // makes sure the menus are always on the correct side of the non-drawing hand
         {
             colourMenu.transform.localPosition = new Vector3(2, 0, 0);
             doneMenu.transform.localPosition = new Vector3(2, 0, 0);
@@ -202,7 +202,7 @@ public class ColourChoosing : MonoBehaviour
         returnToDrawingHeldTime = 0;
         returnToDrawingCircle.GetComponent<Image>().fillAmount = 0;
     }
-    void ResetFillAmounts(string exception)
+    void ResetFillAmounts(string exception) // resets all other buttons than the one you are currently hovering
     {
         switch (exception)
         {
@@ -263,7 +263,7 @@ public class ColourChoosing : MonoBehaviour
                 break;
         }
     }
-    void Update()
+    void Update() // debug stuff
     {
         if (Input.GetKey("q"))
         {

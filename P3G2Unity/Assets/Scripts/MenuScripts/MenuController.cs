@@ -7,7 +7,7 @@ using System.Collections.Generic;
 public class MenuController : MonoBehaviour
 {
     public bool drawingHand; // 0 = left, 1 = right
-    public static MenuController menuControllerInstance;
+    public static MenuController menuControllerInstance; // singleton
     public static Vector3 leftHandPosition;
     public static Vector3 leftShoulderPosition;
     public static Vector3 rightHandPosition;
@@ -85,6 +85,7 @@ public class MenuController : MonoBehaviour
 
         if (SceneManager.GetActiveScene().buildIndex != 6) // Do not run this on the drawing scene
         {
+            // UI specific raycast
             screenpos = UICamera.WorldToScreenPoint(mainHand.transform.position);
             pointerEventData = new PointerEventData(eventSystem);
             pointerEventData.position = screenpos;
@@ -123,7 +124,7 @@ public class MenuController : MonoBehaviour
 
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.buildIndex != 6) // Do not run this on the drawing scene 
+        if (scene.buildIndex != 6) // Do not run this on the drawing scene  
         {
             mainHand = GameObject.FindGameObjectWithTag("Main Hand");
             graphicRaycaster = GameObject.FindGameObjectWithTag("Main Canvas").GetComponent<GraphicRaycaster>();

@@ -17,9 +17,10 @@ public class HandController : MonoBehaviour
     static float calibrationSensitivity = 1.8f;
 
 
-
+    // Only for debugging
     public bool mouseDraw = false;
     bool mouseDown = false;
+    // ^^
 
     public DrawManager drawManager;
     private void Awake()
@@ -35,7 +36,7 @@ public class HandController : MonoBehaviour
     }
     void FixedUpdate()
     {
-        if (!mouseDraw)
+        if (!mouseDraw) // this if-statement is only for debugging
         {
             //Shader stuff:
             Shader.SetGlobalVector("_HandPosition", drawingHandTracker.transform.position);
@@ -43,7 +44,7 @@ public class HandController : MonoBehaviour
             //The rest:
             if (!doneDrawing)
             {
-                if (doneMenu.activeSelf)
+                if (doneMenu.activeSelf) // closes donemenu if it is not supposed to be open
                 {
                     StopAllCoroutines();
                     doneMenu.SetActive(false);
@@ -58,6 +59,7 @@ public class HandController : MonoBehaviour
                         cursor.SetActive(false);
                     }
                     followingParticles.startColor = Color.green;
+                    // add a small interpolating delay to smooth out hand motion
                     drawingHandTracker.transform.position = Vector3.Lerp(drawingHandTracker.transform.position, MenuController.menuControllerInstance.leftHandPositionInvertedYZ * 8, 0.1f);
                     nonDrawingHandTracker.transform.position = Vector3.Lerp(nonDrawingHandTracker.transform.position, MenuController.menuControllerInstance.rightHandPositionInvertedYZ * 8, 0.1f);
 
@@ -125,6 +127,7 @@ public class HandController : MonoBehaviour
                 }
             }
         }
+        // Only for debugging
         else if (mouseDraw)
         {
 
@@ -135,6 +138,7 @@ public class HandController : MonoBehaviour
 
         }
     }
+    //Only for debugging
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
