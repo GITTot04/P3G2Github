@@ -7,11 +7,10 @@ using UnityEngine.UIElements;
 
 public class DrawManager : MonoBehaviour
 {
-
     public float drawZoneDistance;
 
     public float ballDensity;
-    int framesWithoutDraw;
+    int framesWithoutDraw; //Keeps track of how many frames went since last draw input. (Should be 0 or 1 when drawing)
     bool isDrawing = false;
 
 
@@ -21,7 +20,7 @@ public class DrawManager : MonoBehaviour
     public int metaBallMaxCount = 50;
     public Vector3[] metaBallPositions;
     int metaBallArrayPosition;
-    public int keepingBallsCount = 5;
+    public int keepingBallsCount = 5; //Number of positions kept to 'make sausages overlap'.
  
     //For CheckInDrawZone();
     Vector3 lowestPosition;
@@ -48,10 +47,10 @@ public class DrawManager : MonoBehaviour
     
     void FixedUpdate()
     {
-        if (isDrawing && framesWithoutDraw > 3)
+        if (isDrawing && framesWithoutDraw > 3) //Then user is drawing but now stopped drawing
         {
             Debug.Log("stopped drawing");
-            InstantiateDrawing(true);
+            InstantiateDrawing(true); //Calls 'instantiateAsEndedDrawing=true', because user stopped drawing and does not need 'anti-sausaging'
             isDrawing = false;
         }
         framesWithoutDraw++;
@@ -62,55 +61,55 @@ public class DrawManager : MonoBehaviour
         Shader.SetGlobalFloat("_MovementSpeed", movementSpeedFactor);
     }
 
-    public void Draw(Vector3 position)
+    public void Draw(Vector3 position) //Method called when user adds draw position
     {
         AddSpeedDataPoint(position);
         isDrawing = true;
-        framesWithoutDraw = 0;
+        framesWithoutDraw = 0; //Reset frames since last draw input
 
 
-        if (!CheckInDrawZone(position, metaBallArrayPosition))
+        if (!CheckInDrawZone(position, metaBallArrayPosition)) //New position out of drawzone.
         {
             Debug.Log("Out of drawzone");
             InstantiateDrawing(false);
         }
-        if (metaBallArrayPosition >= metaBallMaxCount)
+        if (metaBallArrayPosition >= metaBallMaxCount) //Array full!
         {
             Debug.Log("MetaballPositons full");
             InstantiateDrawing(false);
         }
-        if (metaBallArrayPosition == 0)
+        if (metaBallArrayPosition == 0) //IN case array empty
         {
             lowestPosition = position;
             highestPosition = position;
         }
-
+        //Not matter what, at last add position.
         AddPosition(position);
 
     }
     
-    void InstantiateDrawing (bool instantiateAsEndedDrawing)
+    void InstantiateDrawing (bool instantiateAsEndedDrawing) //Clears metaballs and makes 'new' drawing
     {
         container.ClearMetaBalls();
-        if (instantiateAsEndedDrawing)
+        if (instantiateAsEndedDrawing) //Does not keep position overlay
         {
             metaBallArrayPosition = 0;
         }
-        else
+        else //Keeps position overlay for 'keeping sausages together'
         {
-            for (int i = 0; i < keepingBallsCount; i++)
+            for (int i = 0; i < keepingBallsCount; i++) //Sets lowest values of array to highest for 'anti-sausaging'
             {
                 CheckInDrawZone(metaBallPositions[i], i);
 
                 metaBallPositions[i] = metaBallPositions[metaBallArrayPosition + i - keepingBallsCount];
                 container.AddMetaBall(metaBallPositions[i], lowestPosition);
             }
-            metaBallArrayPosition = keepingBallsCount;
+            metaBallArrayPosition = keepingBallsCount; //then reset array position
             
         }
     }
     
-    bool CheckInDrawZone (Vector3 newPosition, int arrayPosition)
+    bool CheckInDrawZone (Vector3 newPosition, int arrayPosition) //Keeps track wether new postion is out of the drawzone.
     {
         if (arrayPosition == 0)
         {
@@ -172,19 +171,19 @@ public class DrawManager : MonoBehaviour
             {
                 metaBallPositions[metaBallArrayPosition] = position;
                 metaBallArrayPosition++;
-                container.AddMetaBall(position, lowestPosition);
+                container.AddMetaBall(position, lowestPosition); //Adds actual drawing
             }
-            else return;
+            else return; //In case metaball position is too close to former position, no position is added.
         } 
         else 
         {
             metaBallPositions[metaBallArrayPosition] = position;
             metaBallArrayPosition++;
-            container.AddMetaBall(position, lowestPosition);
+            container.AddMetaBall(position, lowestPosition); //Adds actual drawing
         }
     }
 
-    void AddSpeedDataPoint(Vector3 position)
+    void AddSpeedDataPoint(Vector3 position) //Method for shader to detect speed of user motions
     {
         float newPoint = (lastPosition - position).magnitude;
         lastPosition = position;

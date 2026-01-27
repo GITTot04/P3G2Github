@@ -82,26 +82,28 @@ public class Container : MonoBehaviour {
                     {
                         float lerpValue = (float)(k / (fillOutBallsCount + 1));
                         Vector3 position = Vector3.Lerp(metaBalls[metaBallCount - 1].transform.position, metaBalls[metaBallCount - 2].transform.position, lerpValue);
+                        
+                        //Instantiate extra metaball for gab filling:
                         InstantiateBall(position);
                     }
                     break;
                 }
             }
-
         }
+        //Then instantiate metaball
         InstantiateBall(globalPosition);
 
         StartCoroutine(Render());
     }
     
-    void InstantiateBall (Vector3 InstPosition) 
+    void InstantiateBall (Vector3 InstPosition)  // Instantiates metaball GameObject
     {
         GameObject newMetaBall = Instantiate(metaBallPrefab, this.transform);
         newMetaBall.transform.position = InstPosition;
         newMetaBall.transform.localScale = new Vector3(.06f, .06f, .06f);
         metaBalls.Add(newMetaBall);
     }
-    public void ClearMetaBalls()
+    public void ClearMetaBalls() //Clears and destroyes metaballs
     {
         GameObject drawZoneNewObj = new GameObject();
         drawZoneNewObj.transform.localScale = transform.localScale;
@@ -144,7 +146,9 @@ public class Container : MonoBehaviour {
         material.SetFloat("_DrawIntensity", drawIntensity);
        
 
-        this.grid.evaluateAll(this.GetComponentsInChildren<MetaBall>());
+        this.grid.evaluateAll(this.GetComponentsInChildren<MetaBall>()); //Calls metaball logic
+
+        //Fixes mesh
         mesh = this.GetComponent<MeshFilter>().mesh;
         mesh.Clear();
         mesh.vertices = this.grid.vertices.ToArray();
@@ -153,7 +157,7 @@ public class Container : MonoBehaviour {
         RecalculateSmoothNormals(mesh);
     }
   
-    public static void RecalculateSmoothNormals(Mesh mesh, float mergeEpsilon = 0.000001f, float smoothingAngle = 180f)
+    public static void RecalculateSmoothNormals(Mesh mesh, float mergeEpsilon = 0.000001f, float smoothingAngle = 180f) //Makes mesh more smooth
     {
         Vector3[] vertices = mesh.vertices;
         int[] triangles = mesh.triangles;
